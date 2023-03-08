@@ -12,17 +12,38 @@
 //     ]
 // })
 
+// import AppVue from "../App.vue";
 import { createRouter, createWebHistory } from "vue-router";
-import App from '../App.vue'
-import AxiosDemo from '../components/Header.vue'
+// import Todos from '../components/Todos'
+// import App from '../App.vue'
+// import AxiosDemo from '../components/'
+import Login from '../components/Login.vue'
+
+import Demo_vuetifyVue from "@/components/Demo_vuetify.vue";
+
+import Login2 from "../components/demo/Login.vue"
+import BaocaoVue from "@/components/Baocao.vue";
+
 const routes = [{ /// sử dụng router hạn chế dùng thẻ a mà nên dùng router-link  vì thẻ a sẽ khiến trang bị load lại
-        patch: '/home',
-        component: App
+        path: '/',
+        component: Login
     },
     {
-        patch: '/axios',
-        component: AxiosDemo
+        path: '/ay',
+        component: Demo_vuetifyVue
+    },
+    {
+        path: '/login',
+        component: Login2
+    },
+    {
+        path: '/baocao',
+        component: BaocaoVue
     }
+    // {
+    //     patch: '/axios',
+    //     component: AxiosDemo
+    // }
     // { patch: '/:pathMatch(.*)*', component: Error }
 
 ]

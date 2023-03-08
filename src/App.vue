@@ -5,7 +5,9 @@
     {{ value }}
   </div> -->
 
-  <Todos/>
+  <!-- <Todos/> -->
+  
+
   <router-view/>
 </template>
 
@@ -15,7 +17,7 @@
 
 // import { ref } from 'vue';
 
-import Todos from './components/Todos'
+// import Todos from './components/Todos'
 
   export default {
     name:'app',
@@ -23,13 +25,13 @@ import Todos from './components/Todos'
       // Header
 
       
-      Todos
+      // Todos
 
     },
     
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 
 </style>
