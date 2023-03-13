@@ -23,6 +23,7 @@ import Demo_vuetifyVue from "@/components/Demo_vuetify.vue";
 
 import Login2 from "../components/demo/Login.vue"
 import BaocaoVue from "@/components/Baocao.vue";
+import ProfileVue from "@/components/Profile.vue";
 
 const routes = [{ /// sử dụng router hạn chế dùng thẻ a mà nên dùng router-link  vì thẻ a sẽ khiến trang bị load lại
         path: '/',
@@ -39,6 +40,10 @@ const routes = [{ /// sử dụng router hạn chế dùng thẻ a mà nên dùn
     {
         path: '/baocao',
         component: BaocaoVue
+    },
+    {
+        path: '/profile',
+        component: ProfileVue
     }
     // {
     //     patch: '/axios',

@@ -41,8 +41,9 @@
                     </div>
                     
                     <v-btn color="primary" class="ml-0 mr-0 mt-10 mb-5 " type="submit"  >
-                        Đăng nhập
+                        Đăng nhập <span class="mdi mdi-account"></span>
                     </v-btn>
+                    
                 </form>
                 
                 
@@ -58,7 +59,8 @@
 import { Icon } from '@iconify/vue';
 import Fooder from './Fooder'
 import { ref } from 'vue'
-import axios from 'axios';
+// import axios from 'axios';
+import {api_login} from '../api/api.js'
 
 import { useRouter } from 'vue-router'
 
@@ -77,18 +79,35 @@ import { useRouter } from 'vue-router'
             function login() {
             
                 try {
-                    axios.post('https://6404dcf7eed195a99f779a5e.mockapi.io/login',{
-                        email: name.value,
-                        password: password.value,
-                })
+                    api_login.post('/token',{
+                        username: 'duantv@fds.vn',
+                        password: 'Abcd@1234',
+                        app:'dvc-mobile'
+                        }
+                        // ,
+                        // {
+                        //     headers: {
+                        //         secret: 'f5gDd1JLB0vq6VVBvzEbltq6iVuaddvk',
+                        //         'Accept': 'application/json', // báo cho máy chủ muốn nhận dữ liệu response dạng json 
+                        //         'Content-Type': 'application/x-www-form-urlencoded' // báo cho máy chủ biết dữ liệu được mã hóa theo kiểu 
+                        //     },
+                           
+                        // }
+                    ).then(() =>{
+                        // Lưu token vào localStorage hoặc Vuex store
+                        // console.log('ay :',response.data.access_token)
+                        
+                        router.replace("/baocao");
+                    }  
+                )
 
                 // console.log(data_login)
-                localStorage.setItem('user_name', name.value)
+                // localStorage.setItem('user_name', name.value)
                 
                 // console.log(localStorage.getItem('user_name'))
                 
                 // chuyển hướng sang trang khác (ví dụ: dashboard)
-                router.replace("/Login");
+                
                 // chuyển hướng đến trang /home
                 // router.push('/home')
                     // lưu token vào localStorage

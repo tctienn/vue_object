@@ -1,62 +1,198 @@
 <template>
     <v-app id="inspire">
-      <v-system-bar>
+      <!-- <v-system-bar>
         <v-spacer></v-spacer>
   
         <v-icon>mdi-file-document-plus-outline</v-icon>
         <v-icon>mdi-circle</v-icon>
   
         <v-icon>mdi-triangle</v-icon>
-      </v-system-bar>
+      </v-system-bar> -->
   
-      <v-navigation-drawer v-model="drawer">
+      <v-navigation-drawer v-model="drawer" color="#0468B1">
         <v-sheet
-          color="grey-lighten-4"
+          
+          color="#0468B1"
           class="pa-4"
-        >
+          style="display: flex; text-align: center; justify-content: space-evenly; align-items: center;">
           <v-avatar
             class="mb-4"
             color="grey-darken-1"
             size="64"
           ></v-avatar>
-          <div>john@google.com <v-icon>mdi-account</v-icon></div>
-          <v-icon>mdi-file-document-plus-outline</v-icon>
-          <span class="mdi mdi-account"></span>
+          <div style="color: white;"> {{ user }}  </div>
+          <!-- <v-icon
+          start
+          icon="mdi-arrow-left"
+          ></v-icon>
+            <v-icon>mdi-file-document-plus-outline</v-icon>
+            <span class="mdi mdi-account"></span> -->
         </v-sheet>
-  
-        <v-divider>
-        </v-divider>
-  
+        
+        <hr/>
+        
         <v-list>
           <v-list-item
             v-for="[icon, text] in links"
             :key="icon"
             link
+            
           >
             <template v-slot:prepend>
-              <v-icon>{{ icon }}</v-icon>
+              <v-icon color="white" style="opacity:1">{{ icon }}</v-icon>
             </template>
   
-            <v-list-item-title>{{ text }}</v-list-item-title>
+            <v-list-item-title  style="color:white ; opacity: 0.7;" >{{ text }}</v-list-item-title>
           </v-list-item>
         </v-list>
-      </v-navigation-drawer>
+        
+        <div style="position: absolute; bottom: 10px; color: white; width: 100%;">
+          <hr/>
+          <br>
+          <v-icon class="ml-5">
+            mdi-power 
+          </v-icon>
+            đăng xuất
+            
+        </div>
+      </v-navigation-drawer  >
   
-      <v-main>
+      <v-main >
+        <v-card>
+          <img src="../assets/Coat_of_arms_of_Vietnam2.png"/>
+          Hệ thống giám sát và Đánh giá thích ứng biến đổi khí hậu
+        </v-card>
+        
         <v-container
           class="py-8 px-6"
           fluid
         >
-          <v-row>
+        <div style="display: flex;">
+          <div class="title">
+            CHI TIẾT BÁO CÁO
+            
+          </div>
+          <div class="triangle-up"></div>
+          
+          
+        </div>
+        <hr style=" border: solid blue 1px; "/>
+        <v-card flat>
+          Số lượng văn bản quy phạm pháp luật liên quan đến thích ứng biến đổi khí hậu được xây dựng và ban hành
+        </v-card>
+        <v-row align="center" justify="space-between">
+          <v-col class="color">
+            <b style="color: black;">
+              Kỳ báo cáo: 
+            </b>
+            Quý 1 năm 2022
+          </v-col>
+          <v-col class="color">
+            <b style="color: black;">
+              Mã báo cáo:
+            </b>
+            BC-2200001
+          </v-col>
+          <v-col class="color">
+            <b style="color: black;">
+              Mã báo cáo:
+            </b>
+            BC-2200001
+          </v-col>
+          <v-col class="color">
+            <b style="color: black;">
+              Tình trạng
+            </b>
+            Đang sử lý
+          </v-col>
+        </v-row>
+        <v-card flat class="pt-1 pr-1 pb-1 pl1">
+          <v-btn  style="float: right;" color="blue">
+            <v-icon>
+              mdi-plus-circle-outline
+            </v-icon>
+            Thêm thành phần
+          </v-btn>
+        </v-card>
+        <div style="display: flex;">
+          <div class="title">
+            DÁNH SÁCH BÁO CÁO
+          </div>
+          <div class="triangle-up"></div>
+        </div>
+        <hr style=" border: solid blue 1px; "/>
+        
+        <v-card >
+          Số lượng văn bản quy phạm pháp luật liên quan đến thích ứng biến đổi khí hậu được xây dựng và ban hành
+        </v-card>
+        
+        <!-- ///////////////////// main -->
+
+        <v-main class=" pa-0">
+          <v-container class="scrollable ma-0 pa-2">
+            <!-- your content here -->
+            <table width= 100% border="2px"  style="border-collapse: collapse; border: #E5E5E5"   >
+              <tr>
+                <th>
+                  STT
+                </th>
+                <th>
+                  Tên văn bản
+                </th>
+                <th>
+                  Số hiệu văn bản/Loại văn bản
+                </th>
+                <th>
+                  Cơ quan được giao
+                </th>
+                <th>
+                  Ngày Phát hành
+                </th>
+
+                <th>
+                  tình trạng
+                </th>
+                <th>
+                  thao tác
+                </th>
+
+
+
+              </tr>
+              <tr
+                v-for="item in 1"
+                :key="item"
+              >
+                <td>{{ item }}</td>
+                <td> Văn bản 01 </td>
+                <td>121/QĐ Quyết định</td>
+                <td>Cục hàng hải</td>
+                <td>12/12/2022</td>
+                <td>Đang sử lý</td>
+                <td>
+                  <v-icon color="#0468B1">mdi-file-find-outline</v-icon>
+                  <v-icon color="#0468B1" >mdi-pencil-box-outline</v-icon>
+                  <v-icon color="red">mdi-trash-can-outline</v-icon>
+                </td>
+
+                
+              </tr>
+            </table>
+          </v-container>
+        </v-main>
+
+        <!-- /////////////////// end main -->
+          <!-- <v-row>
             <v-col
               v-for="card in cards"
               :key="card"
               cols="12"
+              
             >
               <v-card>
   
                 <v-list lines="two">
-                  <v-list-subheader>{{ card }}</v-list-subheader>
+                  <v-list-subheader >{{ card }}</v-list-subheader>
                   <template v-for="n in 6" :key="n">
                     <v-list-item>
                       <template v-slot:prepend>
@@ -79,27 +215,92 @@
                 </v-list>
               </v-card>
             </v-col>
-          </v-row>
+          </v-row> -->
         </v-container>
       </v-main>
+      
     </v-app>
   </template>
   
   <script>
-    // import '@mdi/font/css/materialdesignicons.css'
+    
+    import { api_profile } from '@/api/api';
+
+    import { ref } from 'vue';
 
     export default {
         name:'BaoCao',
-        data: () => ({
-            cards: ['Today', 'Yesterday'],
-            drawer: null,
-            links: [
-            ['mdi-inbox-arrow-down', 'Inbox'],
-            ['mdi-send', 'Send'],
-            ['mdi-delete', 'Trash'],
-            ['mdi-alert-octagon', 'Spam'],
-            ],
-        }),
+        // data: () => ({
+        //     cards: ['Today', 'Yesterday'],
+        //     drawer: null,
+        //     links: [
+        //     ['mdi-note-plus-outline', 'Tạo báo cáo'],
+        //     ['mdi-send', 'Báo cáo chờ sử lý'],
+        //     ['mdi-delete', 'Báo cáo chờ duyệt'],
+        //     ['mdi-alert-octagon', 'Tổng hợp báo cáo'],
+        //     ['mdi-alert-octagon', 'Kỳ báo cáo'],
+
+        //     ],
+        // }),
+        setup(){
+          const cards = ['Today', 'Yesterday']
+          var drawer = '';
+          const links = [
+            ['mdi-note-plus-outline', 'Tạo báo cáo'],
+            ['mdi-send', 'Báo cáo chờ sử lý'],
+            ['mdi-delete', 'Báo cáo chờ duyệt'],
+            ['mdi-alert-octagon', 'Tổng hợp báo cáo'],
+            ['mdi-alert-octagon', 'Kỳ báo cáo'],
+
+          ]
+
+          const user = ref('')
+          api_profile.get('').then(data=>{
+
+            user.value = data.data.hoVaTen
+            console.log(data)
+            }
+          )
+
+          return {
+            cards,drawer,links,
+            user,
+            
+
+          }
         }
+    }
   </script>
-  
+  <style>
+    .triangle-up {
+      
+        width: 0px;
+        height: 0px;
+        /* background-color: black; */
+        /* border-left: 50px solid transparent; */
+        border-right: 20px solid transparent;
+        border-bottom: 40px solid blue;
+      }
+
+    .title{
+      /* display:  flex; */
+      width:initial;
+      background-color: blue ;
+      padding: 8px;
+      color: white;
+    }
+
+    .color{
+      color: #0468B1;
+    }
+
+    .scrollable {
+    max-height: 50vh;  
+    /* vh là lấy chiều cao theo chiều cao của sửa sổ xem vh = % */
+    overflow-y: auto;
+  }
+
+  th{
+    background-color: #E3F1FB;
+  }
+  </style>
