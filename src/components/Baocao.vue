@@ -64,15 +64,18 @@
   
       <v-main >
         <v-card >
-        </v-card>
-        <v-card-text  style="display: flex; align-items: center; font-size: 30px; text-transform: uppercase; font-family: system-ui; "> 
+          <v-card-text  style="display: flex; align-items: center; font-size: 30px; text-transform: uppercase; font-family: system-ui; "> 
             <img src="../assets/Coat_of_arms_of_Vietnam2.png" style="width: 3.4%; margin-right: 10px;"/>
               Hệ thống giám sát và Đánh giá thích ứng biến đổi khí hậu 
           </v-card-text> 
+        </v-card>
+        
         <v-container
           class="py-2 px-6"
           fluid
         >
+        
+
         <div style="display: flex;">
           <div class="title">
             CHI TIẾT BÁO CÁO
@@ -83,9 +86,11 @@
           
         </div>
         <hr style=" border: solid blue 1px; "/>
+        
         <v-card flat>
           Số lượng văn bản quy phạm pháp luật liên quan đến thích ứng biến đổi khí hậu được xây dựng và ban hành
         </v-card>
+        
         <v-row align="center" justify="space-between">
           <v-col class="color">
             <b style="color: black;">
