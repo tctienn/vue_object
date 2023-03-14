@@ -25,8 +25,8 @@
                         Tên đăng nhập 
                     </label>
                     <div class="box_input">
-                        <Icon icon="icon-park-outline:user" color="white" />
-                        <input type="text" class="input" placeholder="Nhập tên đăng nhập"  v-model="name" />
+                        <Icon icon="icon-park-outline:user" color="white" style="margin: 3px 8px 0 8px;"  />
+                        <input type="text" class="input" placeholder="Nhập tên đăng nhập "  v-model="name"  />
                     </div>
                     <br/>
                     <label style="margin: 0 5%;">
@@ -34,8 +34,8 @@
                     </label> 
                     
                     <div class="box_input">
-                        <Icon icon="ph:lock" color="white" />
-                        <input type="password"  class="input" placeholder="Nhập tên mật khẩu" v-model="password"/>
+                        <Icon icon="ph:lock" color="white" style="margin: 3px 8px 0 8px;" />
+                        <input type="password"  class="input" placeholder="Nhập tên mật khẩu " v-model="password"/>
                     </div>
                     
                     </div>
@@ -74,14 +74,14 @@ import { useRouter } from 'vue-router'
         },  
         setup (){
             const router = useRouter()
-            const name = ref('')
-            const password = ref('')
+            const name = ref('') //duantv@fds.vn
+            const password = ref('') //Abcd@1234
             function login() {
             
                 try {
                     api_login.post('/token',{
-                        username: 'duantv@fds.vn',
-                        password: 'Abcd@1234',
+                        username: name.value,
+                        password: password.value,
                         app:'dvc-mobile'
                         }
                         // ,
@@ -190,7 +190,7 @@ import { useRouter } from 'vue-router'
         color: white;
     }
     .input::placeholder {
-        color: #FFFFFF; /* Đổi màu chữ thành đỏ */
+        color: #FFFFFF; 
         opacity: 0.5; /* Đổi độ đậm nhạt thành 50% */
         font-family: Roboto;
     }

@@ -14,12 +14,17 @@
           
           color="#0468B1"
           class="pa-4"
-          style="display: flex; text-align: center; justify-content: space-evenly; align-items: center;">
-          <v-avatar
+          style="display: flex; text-align: center; align-items: center;">
+          <!-- <v-avatar
             class="mb-4"
             color="grey-darken-1"
             size="64"
-          ></v-avatar>
+          ></v-avatar> -->
+
+          <v-icon color="white" style="opacity:1; margin-right: 10px;" size="40" > 
+            mdi-account-circle-outline
+          </v-icon>
+
           <div style="color: white;"> {{ user }}  </div>
           <!-- <v-icon
           start
@@ -58,11 +63,12 @@
       </v-navigation-drawer  >
   
       <v-main >
-        <v-card>
-          <img src="../assets/Coat_of_arms_of_Vietnam2.png"/>
-          Hệ thống giám sát và Đánh giá thích ứng biến đổi khí hậu
+        <v-card >
         </v-card>
-        
+        <v-card-text  style="display: flex; align-items: center; font-size: 30px; text-transform: uppercase; font-family: system-ui; "> 
+            <img src="../assets/Coat_of_arms_of_Vietnam2.png" style="width: 3.4%; margin-right: 10px;"/>
+              Hệ thống giám sát và Đánh giá thích ứng biến đổi khí hậu 
+          </v-card-text> 
         <v-container
           class="py-8 px-6"
           fluid
@@ -108,7 +114,7 @@
         </v-row>
         <v-card flat class="pt-1 pr-1 pb-1 pl1">
           <v-btn  style="float: right;" color="blue">
-            <v-icon>
+            <v-icon >
               mdi-plus-circle-outline
             </v-icon>
             Thêm thành phần
@@ -170,9 +176,9 @@
                 <td>12/12/2022</td>
                 <td>Đang sử lý</td>
                 <td>
-                  <v-icon color="#0468B1">mdi-file-find-outline</v-icon>
-                  <v-icon color="#0468B1" >mdi-pencil-box-outline</v-icon>
-                  <v-icon color="red">mdi-trash-can-outline</v-icon>
+                  <v-icon color="#0468B1" style="cursor: pointer;">mdi-file-find-outline</v-icon>
+                  <v-icon color="#0468B1" style="cursor: pointer;">mdi-pencil-box-outline</v-icon>
+                  <v-icon color="red" style="cursor: pointer;">mdi-trash-can-outline</v-icon>
                 </td>
 
                 
@@ -247,10 +253,10 @@
           var drawer = '';
           const links = [
             ['mdi-note-plus-outline', 'Tạo báo cáo'],
-            ['mdi-send', 'Báo cáo chờ sử lý'],
-            ['mdi-delete', 'Báo cáo chờ duyệt'],
-            ['mdi-alert-octagon', 'Tổng hợp báo cáo'],
-            ['mdi-alert-octagon', 'Kỳ báo cáo'],
+            ['mdi-autorenew', 'Báo cáo chờ sử lý'],
+            ['mdi-clipboard-text-clock-outline', 'Báo cáo chờ duyệt'],
+            ['mdi-file-chart-outline', 'Tổng hợp báo cáo'],
+            ['mdi-chart-areaspline', 'Kỳ báo cáo'],
 
           ]
 
