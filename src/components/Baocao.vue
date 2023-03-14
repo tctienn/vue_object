@@ -70,7 +70,7 @@
               Hệ thống giám sát và Đánh giá thích ứng biến đổi khí hậu 
           </v-card-text> 
         <v-container
-          class="py-8 px-6"
+          class="py-2 px-6"
           fluid
         >
         <div style="display: flex;">
@@ -112,7 +112,7 @@
             Đang sử lý
           </v-col>
         </v-row>
-        <v-card flat class="pt-1 pr-1 pb-1 pl1">
+        <v-card flat class="pt-1 pr-1 pb-1 pl1 mt-4 mb-4">
           <v-btn  style="float: right;" color="blue">
             <v-icon >
               mdi-plus-circle-outline
