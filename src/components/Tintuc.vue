@@ -265,6 +265,7 @@ export default {
     }
     const reload_them = (item)=>{
       // alert('ay')
+      // console.log(item)
       data.value.push(item)
       // alert(data.value.length)
     }

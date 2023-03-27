@@ -115,16 +115,16 @@
                 <v-btn color="white" class="bg-red"  style="width: max-content;" @click="dialog = false" ><v-icon>mdi-close</v-icon> Thoát</v-btn>
                 <v-btn color="white" class="bg-blue" style="width: max-content;" @click="click_them_tt()" ><v-icon>mdi-file-document-plus-outline</v-icon> Thêm mới</v-btn>
               </v-card-actions>
-             <v-card v-for="(item, i) in select" :key="i">
+             <!-- <v-card v-for="(item, i) in select" :key="i">
                 {{ item }}
-             </v-card>
+             </v-card> -->
             </v-card>
           </v-dialog>
 </template>
 
 <script>
 import { ref } from 'vue';
-// import { them_tt } from '@/api/api';
+import { them_tt } from '@/api/api';
 
 export default {
     name:'DiaLog',
@@ -149,37 +149,37 @@ export default {
           { MaDinhDanhNhomQuyen: 'ba520f8c-60b9-434f-b823-680e62cdd93e-r7y9ahxrrhxbaqwx' , TenNhomQuyen: 'Admin cấp đơn vị' },
         ])
         const click_them_tt =()=>{
-            // them_tt(
-            //     {"MaChuyenMuc":machuyenmuc.value,
-            //     "TenChuyenMuc":tenchuyenmuc.value,
-            //     "TenTiengAnh":tentiengAnh.value,
-            //     "SoThuTu":stt.value,
-            //     "TinhTrang":tinhtrang.value,
-            //     "MaChuyenMucCha":chuyenmuccha.value,
-            //     "PhanQuyenChuyenMuc":select.value
-            //   }).then( respon=>
-            //     console.log('respon',respon),
-            //     dialog.value = false,
-            //     contex.emit('themtt',  {"MaChuyenMuc":machuyenmuc.value,
-            //     "TenChuyenMuc":tenchuyenmuc.value,
-            //     "TenTiengAnh":tentiengAnh.value,
-            //     "SoThuTu":stt.value,
-            //     "TinhTrang":tinhtrang.value,
-            //     "MaChuyenMucCha":chuyenmuccha.value,
-            //     "PhanQuyenChuyenMuc":select.value,})
-
-            // ).catch(error => {
-            //       console.log('LOI dialog thêm ti tức ',error.response)
-            //   }
-            // )
-              
-            contex.emit('themtt',  {"MaChuyenMuc":machuyenmuc.value,
+            them_tt(
+                {"MaChuyenMuc":machuyenmuc.value,
+                "TenChuyenMuc":tenchuyenmuc.value,
+                "TenTiengAnh":tentiengAnh.value,
+                "SoThuTu":stt.value,
+                "TinhTrang":tinhtrang.value,
+                "MaChuyenMucCha":chuyenmuccha.value,
+                "PhanQuyenChuyenMuc":select.value
+              }).then( respon=>
+                console.log('respon',respon),
+                dialog.value = false,
+                contex.emit('themtt',  {"MaChuyenMuc":machuyenmuc.value,
                 "TenChuyenMuc":tenchuyenmuc.value,
                 "TenTiengAnh":tentiengAnh.value,
                 "SoThuTu":stt.value,
                 "TinhTrang":tinhtrang.value,
                 "MaChuyenMucCha":chuyenmuccha.value,
                 "PhanQuyenChuyenMuc":select.value,})
+
+            ).catch(error => {
+                  console.log('LOI dialog thêm ti tức ',error.response)
+              }
+            )
+              
+            // contex.emit('themtt',  {"MaChuyenMuc":machuyenmuc.value,
+            //     "TenChuyenMuc":tenchuyenmuc.value,
+            //     "TenTiengAnh":tentiengAnh.value,
+            //     "SoThuTu":stt.value,
+            //     "TinhTrang":tinhtrang.value,
+            //     "MaChuyenMucCha":chuyenmuccha.value,
+            //     "PhanQuyenChuyenMuc":select.value})
             // console.log(select.value)
         }
 
