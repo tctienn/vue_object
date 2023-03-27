@@ -37,6 +37,7 @@
                         <Icon icon="ph:lock" color="white" style="margin: 3px 8px 0 8px;" />
                         <input type="password"  class="input" placeholder="Nhập tên mật khẩu " v-model="password"/>
                     </div>
+                   
                     
                     </div>
                     
@@ -97,7 +98,7 @@ import { useRouter } from 'vue-router'
                         // Lưu token vào localStorage hoặc Vuex store
                         // console.log('ay :',response.data.access_token)
                         
-                        router.replace("/baocao");
+                        router.replace("/QLTinTuc");
                     }  
                 )
 
@@ -139,7 +140,7 @@ import { useRouter } from 'vue-router'
         background-image: url('../assets/image5.png');
         background-repeat: no-repeat;
         width: 100%;
-        height: 680px;
+        height: 94.5vh;
         background-size: 100% 100%;
         padding: 50px 0 0 0;
         
@@ -189,9 +190,21 @@ import { useRouter } from 'vue-router'
         outline: none;
         color: white;
     }
+    input:-webkit-autofill { 
+        /* background-color: transparent; */
+         -webkit-text-fill-color: white;
+          /* -webkit-box-shadow: inset 0 0 0 1000px transparent !important; */
+    }    
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        transition: background-color 5000s ease-in-out 0s;
+    }
+    /* input:-webkit-autofill { background-color: transparent; -webkit-text-fill-color: white; -webkit-transition-delay: 9999s; -webkit-transition: color 9999s ease-out, background-color 9999s ease-out; } */
     .input::placeholder {
         color: #FFFFFF; 
-        opacity: 0.5; /* Đổi độ đậm nhạt thành 50% */
+        opacity: 0.5;
         font-family: Roboto;
     }
 </style>
