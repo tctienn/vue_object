@@ -152,7 +152,7 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ item.MaChuyenMuc }}</td>
                 <td>{{ item.TenChuyenMuc }}</td>
-                <td>{{ item.ListQuyenChuyenMuc?.map(obj => obj.TenNhomQuyen).join(", ") }}</td>
+                <td>{{ item.ListQuyenChuyenMuc?.map(obj => obj.TenNhomQuyen).join(", ")   }} {{ item.PhanQuyenChuyenMuc?.map(obj => obj.TenNhomQuyen).join(",") }}</td>
                 <td>{{ item.TinhTrang }}</td>
                 <td style="text-align: center">
                   <dialog_capnhatt v-bind:dataprop="item" @reload_get_tt="reload_get" />
@@ -267,6 +267,8 @@ export default {
       // alert('ay')
       // console.log(item)
       data.value.push(item)
+      console.log(data.value)
+      
       // alert(data.value.length)
     }
     return {
