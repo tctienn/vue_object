@@ -103,7 +103,7 @@
             
             Thêm thành phần
           </v-btn> -->
-          <dialog_themttVue />
+          <dialog_themttVue @themtt="reload_them"/>
         </v-card>
 
         <div style="display: flex;">
@@ -148,7 +148,7 @@
 
               </tr>
               <tr v-for="(item, i) in data" :key="i"
-                v-show="(i + 1) >= (page_number == 1 ? page_number : (page_number * 8 - 8)) && (i + 1) < (page_number == 1 ? 9 : (page_number * 8 + 2))">
+                v-show="(i + 1) >= (page_number == 1 ? page_number : (page_number * 8 - 8)) && (i + 1) < (page_number == 1 ? 8 : (page_number * 8 + 2))">
                 <td>{{ i + 1 }}</td>
                 <td>{{ item.MaChuyenMuc }}</td>
                 <td>{{ item.TenChuyenMuc }}</td>
@@ -263,6 +263,9 @@ export default {
       
       console.log("result: ",data.value)
     }
+    const reload_them = (item)=>{
+      data.value.push.apply(item)
+    }
     return {
       cards, drawer, links,
       data,
@@ -271,6 +274,8 @@ export default {
       dialog_capnhatt,
       reload_get,
       logout,
+      reload_them,
+
 
     }
   }

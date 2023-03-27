@@ -128,7 +128,7 @@ import { them_tt } from '@/api/api';
 
 export default {
     name:'DiaLog',
-    setup(){
+    setup(contex){
         const dialog = ref(false)
         const machuyenmuc = ref('test')
         const tenchuyenmuc = ref('test')
@@ -160,7 +160,13 @@ export default {
               }).then( respon=>
                 console.log('respon',respon),
                 dialog.value = false,
-                
+                contex.emit('themtt',  {"MaChuyenMuc":machuyenmuc.value,
+                "TenChuyenMuc":tenchuyenmuc.value,
+                "TenTiengAnh":tentiengAnh.value,
+                "SoThuTu":stt.value,
+                "TinhTrang":tinhtrang.value,
+                "MaChuyenMucCha":chuyenmuccha.value,
+                "PhanQuyenChuyenMuc":select.value,})
 
             ).catch(error => {
                   console.log('LOI dialog thêm ti tức ',error.response)
