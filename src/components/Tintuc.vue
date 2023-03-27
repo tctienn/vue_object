@@ -103,7 +103,7 @@
             
             Thêm thành phần
           </v-btn> -->
-          <dialog_themttVue @themtt="reload_them"/>
+          <dialog_themttVue @themtt="reload_them" />
         </v-card>
 
         <div style="display: flex;">
@@ -264,7 +264,9 @@ export default {
       console.log("result: ",data.value)
     }
     const reload_them = (item)=>{
-      data.value.push.apply(item)
+      // alert('ay')
+      data.value.push(item)
+      // alert(data.value.length)
     }
     return {
       cards, drawer, links,
