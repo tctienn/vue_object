@@ -26,6 +26,7 @@ import BaocaoVue from "@/components/Baocao.vue";
 import ProfileVue from "@/components/Profile.vue";
 
 import TinTuc from "@/components/Tintuc.vue"
+import demo_computedVue from "@/components/demo/demo_computed.vue";
 
 const routes = [{ /// sử dụng router hạn chế dùng thẻ a mà nên dùng router-link  vì thẻ a sẽ khiến trang bị load lại
         path: '/',
@@ -51,6 +52,11 @@ const routes = [{ /// sử dụng router hạn chế dùng thẻ a mà nên dùn
 
         path: '/QLTinTuc',
         component: TinTuc
+    },
+    {
+
+        path: '/demo_computed',
+        component: demo_computedVue
     }
     // {
     //     patch: '/axios',

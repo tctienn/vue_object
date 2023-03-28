@@ -34,7 +34,7 @@
         </v-list-item>
       </v-list>
 
-      <div style="position: absolute; bottom: 10px; color: white; width: 100%; " @click="logout()">
+      <div style="position: absolute; bottom: 10px; color: white; width: 100%; cursor: pointer; " @click="logout()">
         <hr />
         <br>
         <v-icon class="ml-5">
@@ -171,11 +171,11 @@
             Tổng số: {{ data.length  }}
           </div>
           <v-pagination v-model="page_number"  :total-visible= "1"
-          :length="((data.length / 8) - Math.floor(data.length / 8)) > 0 ? (Math.floor(data.length / 8) + 1) : Math.floor(data.length / 8)"
+          :length="Math.ceil(data.length / 8) "
           >
           </v-pagination>
           <select class="select_page pl-2 pr-2 " v-model="page_number"> 
-            <option v-for="i in (((data.length / 8) - Math.floor(data.length / 8)) > 0 ? (Math.floor(data.length / 8) + 1) : Math.floor(data.length / 8))" 
+            <option v-for="i in Math.ceil(data.length / 8)" 
               :key="i" 
               :value="i"
             >
@@ -202,6 +202,7 @@ import { api_tintuc } from '@/api/api';
 
 import dialog_themttVue from './component/dialog_themtt.vue';
 import dialog_capnhatt from './component/dialog_capnhatt.vue';
+import { taocock } from '@/api/cookie';
 
 export default {
   name: 'TinTuc',
@@ -225,8 +226,10 @@ export default {
   setup() {
     const cards = ['Today', 'Yesterday']
     const router = useRouter()
+    
     const logout = () =>{
-      localStorage.removeItem('token')
+      // localStorage.removeItem('token')
+      taocock('login_token' , '','0');
       router.replace("/");
     }
     var drawer = '';
@@ -280,7 +283,7 @@ export default {
       reload_get,
       logout,
       reload_them,
-
+      
 
     }
   }

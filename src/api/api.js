@@ -20,6 +20,7 @@
 
 
 import axios from 'axios';
+import { getCookie, taocock } from './cookie';
 
 export const api_login = axios.create({
     baseURL: 'http://119.17.200.66:8373/flex/oauth2',
@@ -44,7 +45,8 @@ api_login.interceptors.request.use((config) => {
 api_login.interceptors.response.use(function(response) {
     // Trả về dữ liệu phản hồi
     console.log('ay :', response)
-    localStorage.setItem('token', response.data.access_token)
+    // localStorage.setItem('token', response.data.access_token)
+    taocock('login_token' , response.data.access_token,'36000');
         // console.log(localStorage.getItem('token'))
 
     return response;
@@ -67,7 +69,8 @@ export const api_profile = axios.create({
 
 api_profile.interceptors.request.use(function(config) {
     if (config.method === 'get') {
-        var token = localStorage.getItem('token')
+        // var token = localStorage.getItem('token')
+        var token = getCookie('login_token')
         if (token) {
             config.data = null // xác nhận phương thức get không gửi dữ liệu 
             config.headers = {
@@ -103,7 +106,8 @@ export const api_tintuc = axios.create({
 
 api_tintuc.interceptors.request.use(function(config) {
     if (config.method === 'get') {
-        var token = localStorage.getItem('token')
+        // var token = localStorage.getItem('token')
+        var token = getCookie('login_token')
         if (token) {
             config.data = null // xác nhận phương thức get không gửi dữ liệu 
             config.headers = {
@@ -117,7 +121,8 @@ api_tintuc.interceptors.request.use(function(config) {
 
     if (config.method === 'post')
     {
-        var token2 = localStorage.getItem('token')
+        // var token2 = localStorage.getItem('token')
+        var token2 = getCookie('login_token')
         if (token2) {
             config.headers = {
                 Authorization: `Bearer ${token2}`,
@@ -145,3 +150,5 @@ export const capnhat_tt = (PrimKey,data) => {
     console.log(PrimKey)
     return api_tintuc.post(`/${PrimKey}`,data)
 }
+
+///////////////////////////////////

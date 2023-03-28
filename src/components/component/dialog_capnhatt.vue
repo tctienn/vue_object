@@ -115,7 +115,7 @@ setup(props,contex){
   const machuyenmuc = ref(props.dataprop.MaChuyenMuc)
   const tenchuyenmuc = ref(props.dataprop.TenChuyenMuc)
   const tentiengAnh = ref(props.dataprop.TenTiengAnh)
-  const stt = ref(props.dataprop.stt)
+  const stt = ref(props.dataprop.SoThuTu)
   const chuyenmuccha =ref(props.dataprop.MaChuyenMucCha)
   const nhomquyen = ref(props.dataprop[0]?.TenNhomQuyen)
   const tinhtrang = ref(props.dataprop.TinhTrang)
