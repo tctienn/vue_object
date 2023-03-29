@@ -8,11 +8,16 @@
     <button @click="click_ref()">
         button refs
     </button>
+    <br/>
+    <input type="text" placeholder="watch"  v-model="message" />
+    {{ message }}
+    /
+    {{ computed_ }}
 
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref , watch  , computed} from 'vue';
 
 import demo_refsVue from './demo_refs.vue';
 import {taocock} from'../../api/cookie.js'
@@ -29,8 +34,9 @@ export default {
         const logRef = () => {
                 //  console.log(myInput.value.classList); // lấy class
                  console.log(myInput.value.offsetWidth);
+                 myInput.value.innerHTML = ' thayyyyyyyy'
                 //  document.cookie = "token=Nguyen Van Hieus; max-age=31536000; path=/";
-                taocock('demotoken ','ayyyyy')
+                taocock('demotoken ','ayyyyy','36000')
              }
              
         const click_ref = () =>{
@@ -39,12 +45,28 @@ export default {
 
 
         }
+        const message = ref('1 s');
+        ///watch
+        watch( message,
+             (ay, ayy)=>{
+                console.log(ay,ayy)
+            }
+            )
+        const computed_ = computed(() => {
+
+            
+            /// effectwatch chạy lần đầu khi load trang
+            /// computed có thể return
+            /// watch có thể kiểm soát được biến phản ứng nào cần được theo dõi
+        return message.value.split(" ").reverse().join(" ");
+        });
         return {
             logRef,
             myInput,
             ref_,
             click_ref,
-            
+            message,
+            computed_
 
 
         }
