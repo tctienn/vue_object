@@ -15,6 +15,10 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
+import Vue3EasyDataTable from 'vue3-easy-data-table';
+import 'vue3-easy-data-table/dist/style.css';
+
+
 const vuetify = createVuetify({
     components,
     directives,
@@ -23,5 +27,5 @@ const vuetify = createVuetify({
 const app = createApp(App);
 app.use(createPinia())
     .use(vuetify)
-    .use(router)
+    .use(router).component('EasyDataTable', Vue3EasyDataTable)
     .mount('#app')

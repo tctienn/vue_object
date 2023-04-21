@@ -1,5 +1,5 @@
 <template>
-    <v-app id="inspire">
+    <v-app id="inspire" v-show="false">
       <!-- <v-system-bar>
         <v-spacer></v-spacer>
   

@@ -61,9 +61,11 @@ import { Icon } from '@iconify/vue';
 import Fooder from './Fooder'
 import { ref } from 'vue'
 // import axios from 'axios';
-import {api_login} from '../api/api.js'
+import {api_login  } from '../api/api.js'
 
 import { useRouter } from 'vue-router'
+import { menu_pina } from '@/pinia/Store'
+
 
 
 
@@ -77,6 +79,7 @@ import { useRouter } from 'vue-router'
             const router = useRouter()
             const name = ref('') //duantv@fds.vn
             const password = ref('') //Abcd@1234
+            const pina_menu = menu_pina();
             function login() {
             
                 try {
@@ -97,8 +100,17 @@ import { useRouter } from 'vue-router'
                     ).then(() =>{
                         // Lưu token vào localStorage hoặc Vuex store
                         // console.log('ay :',response.data.access_token)
+                        pina_menu.actions_loadmenu().then(()=>{  /// không thêm () thì nó vẫn sảy ra bất đồng bộ đây là cấu trúc của then
+                            router.replace("/canbo")
+                            // console.log(pina_menu.menu)
+                        }
+                            
+                        )
                         
-                        router.replace("/QLTinTuc");
+                        // router.replace("/canbo")
+                        
+                        
+                    
                     }  
                 )
 

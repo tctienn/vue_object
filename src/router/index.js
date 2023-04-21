@@ -27,6 +27,12 @@ import ProfileVue from "@/components/Profile.vue";
 
 import TinTuc from "@/components/Tintuc.vue"
 import demo_computedVue from "@/components/demo/demo_computed.vue";
+import QL_CanBoVue from "@/components/QL_CanBo.vue";
+import dateVue from "@/components/demo/date.vue";
+// import table from "../components/demo/table.vue"
+import demo_tabe from "@/components/demo/demo_tabe.vue";
+// import Table
+// import QL_CanBoVue from "@/components/QL_CanBo.vue";
 
 const routes = [{ /// sử dụng router hạn chế dùng thẻ a mà nên dùng router-link  vì thẻ a sẽ khiến trang bị load lại
         path: '/',
@@ -57,7 +63,22 @@ const routes = [{ /// sử dụng router hạn chế dùng thẻ a mà nên dùn
 
         path: '/demo_computed',
         component: demo_computedVue
+    },
+    {
+        path:'/canbo',
+        component:QL_CanBoVue
+    },
+    {
+        path:"/date",
+        component:dateVue
+    },
+    {
+        path:"/table",
+        component: demo_tabe
     }
+
+    
+
     // {
     //     patch: '/axios',
     //     component: AxiosDemo
