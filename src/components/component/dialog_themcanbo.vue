@@ -61,7 +61,7 @@
               type="text"
               style="width: 100%"
               class="border_input"
-              placeholder="Nhập tên tiếng anh..."
+              placeholder="Nhập EMAIL..."
               v-model="email"
             />
           </div>
@@ -212,7 +212,7 @@ export default {
     Datepicker,
   },
   props: ["data_props"],
-  setup(props) {
+  setup(props, contex) {
     const dialog = ref(false);
     const maCanBo = ref("test");
     const tenCanBo = ref("test");
@@ -240,44 +240,8 @@ export default {
       coQuanDonVi.value = props.data_props;
     };
 
-    // const items = ref([
-    //   {
-    //     MaDinhDanhNhomQuyen:
-    //       "ddf8e704-436c-49a7-9a49-530cf90a68b2-u3ujiaelx512e8ip",
-    //     TenNhomQuyen: "Quản trị tin bài",
-    //   },
-    //   {
-    //     MaDinhDanhNhomQuyen:
-    //       "e35d8193-3ce7-4998-a905-122dd40f2872-uasi0qixa6ludtd1",
-    //     TenNhomQuyen: "Quản lý sinh viên",
-    //   },
-    //   {
-    //     MaDinhDanhNhomQuyen:
-    //       "23ef333a-b482-486d-bf80-e16e4a63b749-4hyfi6giusohpuze",
-    //     TenNhomQuyen: "Quản lý bản đồ số",
-    //   },
-    //   {
-    //     MaDinhDanhNhomQuyen:
-    //       "c2f1c6d9-c69b-4065-9ec6-a47419048c17-modnuvnl4ynji30u",
-    //     TenNhomQuyen: "test nhóm quyền",
-    //   },
-    //   {
-    //     MaDinhDanhNhomQuyen:
-    //       "ba520f8c-60b9-434f-b823-680e62cdd93e-r7y9ahxrrhxbaqwx",
-    //     TenNhomQuyen: "Admin cấp đơn vị",
-    //   },
-    // ]);
     const ay = ref({}); /// biến này lưu biến đối tượng trong sự kiện post thêm cán bộ
     const click_them_tt = () => {
-      // contex.emit('themtt',  {"maCanBo":maCanBo.value,
-      //     "tenCanBo":tenCanBo.value,
-      //     "email":email.value,
-      //     "SoThuTu":stt.value,
-      //     "TinhTrang":tinhtrang.value,
-      //     "maCanBoCha":chuyenmuccha.value,
-      //     "PhanQuyenChuyenMuc":select.value})
-      // console.log(select.value)
-
       ay.value = {
         MaSoCanBo: maCanBo.value,
         GioiTinh: {
@@ -328,57 +292,8 @@ export default {
         PhanQuyenCanBo: [],
       };
 
-      // const a = {
-      //   MaSoCanBo: maCanBo.value,
-      //   GioiTinh: {
-      //     MaMuc: select_gioiTinh.value.maMuc,
-      //     TenMuc: select_gioiTinh.value.tenMuc,
-      //     type: select_gioiTinh.value.type,
-      //   },
-      //   HoVaTen: tenCanBo.value,
-      //   NgaySinh: 1680627600000,
-      //   ListQuyenCanBo: [],
-      //   EmailVNU: email.value,
-      //   CoQuanDonVi: {
-      //     MaHanhChinh: select_coQuanDonVi.value.maHanhChinh,
-      //     TenGoi: select_coQuanDonVi.value.tenGoi,
-      //   },
-      //   TrangThaiTaiKhoan: "",
-      //   TinhTrangCongTac: {
-      //     TinhTrangCongTac: "",
-      //     CoQuanDonVi: {
-      //       MaHanhChinh: select_coQuanDonVi.value.maHanhChinh,
-      //       TenGoi: select_coQuanDonVi.value.tenGoi,
-      //     },
-      //     ViTriChucDanh: [
-      //       {
-      //         MaDinhDanh: "",
-      //         TenGoi: "",
-      //       },
-      //     ],
-      //   },
-      //   DiaChiThuongTru: {
-      //     SoNhaChiTiet: diaChi.value,
-      //     TinhThanh: {
-      //       MaMuc: select_tinh.value.maMuc,
-      //       TenMuc: select_tinh.value.tenMuc,
-      //       type: select_tinh.value.type,
-      //     },
-      //     QuanHuyen: {
-      //       MaMuc: select_quan.value.maMuc,
-      //       TenMuc: select_quan.value.tenMuc,
-      //       type: select_quan.value.type,
-      //     },
-      //     PhuongXa: {
-      //       MaMuc: select_phuong.value.maMuc,
-      //       TenMuc: select_phuong.value.tenMuc,
-      //       type: select_phuong.value.type,
-      //     },
-      //   },
-      //   PhanQuyenCanBo: [],
-      // };
-
       post_themCanBo(ay.value);
+      contex.emit("themcanbo");
       dialog.value = false;
       // console.log(ay.value);
     };

@@ -70,7 +70,10 @@
               :check_select="arr_check"
               v-on:phanquyen="reload"
             />
-            <dialog_themcanbo :data_props="coQuanDonVi" />
+            <dialog_themcanbo
+              :data_props="coQuanDonVi"
+              v-on:themcanbo="reload"
+            />
           </div>
         </v-card>
 
@@ -228,10 +231,11 @@ export default {
     //// khởi tạo mảng check
     const arr_check = ref([]);
     const get_danhsachcanbo = async () => {
-      var result = await getcanbo();
-      console.log("result", result);
+      const result = await getcanbo();
+      // console.log("result", result);
       // data.value = await getcanbo();
       data.value = result.data.content;
+      alert("số lượng" + data.value.length);
       old_data.value = data.value; // dùng đẻ so sánh dữ liệu khi chạy tìm kiếm
       check_loading.value = false;
       // alert("ayyyy");
