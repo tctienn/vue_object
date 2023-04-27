@@ -266,8 +266,8 @@ tr_canbo.interceptors.request.use(function(config) {
     return Promise.reject(error);
 });
 
-export const getcanbo   = () =>{
-    return  api_menu.get('/canbo/filter?page=0&size=20&keyword=&orderFields=&orderTypes=&tinhTrang=&thamChieu_maMuc=')
+export const getcanbo   = (page) =>{
+    return  api_menu.get(`/canbo/filter?page=${page}&size=20&keyword=&orderFields=&orderTypes=&tinhTrang=&thamChieu_maMuc=`)
     // console.log('get data canbo ' , data.data.content.length)
     // console.log('ayyyy')
    
@@ -311,6 +311,9 @@ export const post_themCanBo = (data) =>{
     return api_menu.post('/canbo',data)
 }
 
+export const post_updateCanBo = (PrimKey,data) =>{
+    return api_menu.post(`/canbo/${PrimKey}`,data)
+}
 api_menu.interceptors.response.use(function(response) {
     // Trả về dữ liệu phản hồi
     // console.log('ay :', response)
@@ -322,7 +325,8 @@ api_menu.interceptors.response.use(function(response) {
 }, function(error) {
     // Xử lý lỗi
     // window.location.href = "http://localhost:8080/";
-    console.log('lỗi')
+    
+    console.log('lỗi request qpi cán bộ')
     return Promise.reject(error);
 });
 

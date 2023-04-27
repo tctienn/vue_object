@@ -1,15 +1,15 @@
 <template>
   <v-dialog v-model="dialog" style="margin: auto; width: 80%">
     <template v-slot:activator="{ props }">
-      <v-btn
-        style="float: right; padding: 0 5px; font-size: 10px"
-        color="blue"
+      <v-icon
         v-bind="props"
         @click="handClick"
+        color="red"
+        style="cursor: pointer"
+        size="{1}"
+        title="sửa"
+        >mdi-pencil</v-icon
       >
-        <v-icon> mdi-plus-circle-outline </v-icon>
-        Thêm thành phần
-      </v-btn>
     </template>
 
     <v-card id="ay">
@@ -22,7 +22,7 @@
             margin: auto;
           "
         >
-          <div style="">Thêm mới cán bộ</div>
+          <div style="">Cập nhật cán bộ</div>
           <!-- <v-btn block @click="dialog = false" style="min-width: 0%;">Close Dialog</v-btn> -->
           <v-icon block @click="dialog = false"> mdi-close </v-icon>
         </div>
@@ -109,6 +109,7 @@
               style="width: 98%"
               v-model="diaChi"
             />
+
             <!-- <select class="input_select" v-model="chuyenmuccha">
               <option value="">chọn</option>
               <option value="Tin tức - sự kiện">Tin tức - sự kiện</option>
@@ -133,6 +134,7 @@
                     {{ e.tenMuc }}
                   </option>
                 </select>
+                <br />
               </div>
               <div style="width: 31%">
                 <h4>Phường/xã:</h4>
@@ -146,20 +148,6 @@
           </div>
           <div class="input_tt" id="fullWidth">
             <h4>cơ quan đợn vị: <span class="text-red">*</span></h4>
-
-            <!-- <v-select
-              clearable
-              chips
-              v-model="select"
-              item-title="TenNhomQuyen"
-              item-value="MaDinhDanhNhomQuyen"
-              label="chọn"
-              :items="items"
-              return-object
-              multiple
-              variant="solo"
-              class="custom-height-select"
-            ></v-select> -->
 
             <v-select
               v-model="select_coQuanDonVi"
@@ -206,7 +194,7 @@ import {
   get_phuong,
   get_quan,
   get_tinh,
-  post_themCanBo,
+  post_updateCanBo,
 } from "@/api/api";
 
 export default {
@@ -214,21 +202,21 @@ export default {
   components: {
     Datepicker,
   },
-  props: ["data_props"],
+  props: ["data_props", "itemCheck"],
   setup(props, contex) {
     const dialog = ref(false);
-    const maCanBo = ref("test");
-    const tenCanBo = ref("test");
-    const email = ref("");
-    const diaChi = ref("");
+    const maCanBo = ref(props.itemCheck.MaSoCanBo);
+    const tenCanBo = ref(props.itemCheck.HoVaTen);
+    const email = ref(props.itemCheck.EmailVNU);
+    const diaChi = ref(props.itemCheck.diaChiThuongTru.SoNhaChiTiet);
     const coQuanDonVi = ref(props.data_props);
     const select_coQuanDonVi = ref([]);
 
-    const select_tinh = ref([]);
+    const select_tinh = ref({});
     const data_tinh = ref([]);
-    const select_quan = ref([]);
+    const select_quan = ref({});
     const data_quan = ref([]);
-    const select_phuong = ref([]);
+    const select_phuong = ref({});
     const data_phuong = ref([]);
 
     const ngaySinh = ref(new Date());
@@ -237,10 +225,48 @@ export default {
     const select = ref([]);
 
     const gioiTinh = ref([]);
-    const select_gioiTinh = ref([]);
+    const select_gioiTinh = ref({});
 
     const handClick = () => {
+      // chọn sẵn giới tính
+      select_gioiTinh.value = gioiTinh.value.filter(
+        (e) => e.maMuc == props.itemCheck.GioiTinh.MaMuc
+      );
+      get_tinh()
+        .then((tinh) => {
+          data_tinh.value = tinh.data.content;
+          select_tinh.value = data_tinh.value.find(
+            (e) => e.maMuc == props.itemCheck.diaChiThuongTru.TinhThanh.MaMuc
+          );
+        })
+        .then(() => {
+          get_quan(select_tinh.value.maMuc)
+            .then((quan) => {
+              data_quan.value = quan.data.content;
+              select_quan.value = quan.data.content.find(
+                (e) =>
+                  e.maMuc == props.itemCheck.diaChiThuongTru.QuanHuyen.MaMuc
+              );
+            })
+            .then(() => {
+              console.log("data", select_quan.value.maMuc);
+              get_phuong(select_quan.value.maMuc).then((phuong) => {
+                data_phuong.value = phuong.data.content;
+                select_phuong.value = phuong.data.content.find(
+                  (e) =>
+                    e.maMuc == props.itemCheck.diaChiThuongTru.PhuongXa.MaMuc
+                );
+              });
+            });
+          // console.log("quan", select_quan.value);
+        });
+
+      // lấy dữ liệu cơ quan đơn vị trừ cha
       coQuanDonVi.value = props.data_props;
+
+      select_coQuanDonVi.value = coQuanDonVi.value.find(
+        (e) => e.MaHanhChinh == props.data_props.maHanhChinh
+      );
     };
 
     const ay = ref({}); /// biến này lưu biến đối tượng trong sự kiện post thêm cán bộ
@@ -253,7 +279,7 @@ export default {
           type: select_gioiTinh.value.type,
         },
         HoVaTen: tenCanBo.value,
-        NgaySinh: ngaySinh.value.getTime(),
+        NgaySinh: 1680627600000,
         ListQuyenCanBo: [],
         EmailVNU: email.value,
         CoQuanDonVi: {
@@ -302,10 +328,9 @@ export default {
         email.value == ""
       ) {
         alert("nhập chưa dủ thông tin");
-
         return;
       }
-      post_themCanBo(ay.value)
+      post_updateCanBo(props.itemCheck.PrimKey, ay.value)
         .then(() => contex.emit("themcanbo"))
         .catch(() => {
           // xử lý lỗi ở đây
@@ -322,6 +347,13 @@ export default {
     //   console.log("ayyyyyy");
     // });
 
+    watch(ngaySinh, (newName, oldName) => {
+      console.log(newName, oldName);
+      console.log("ngaf sinh ", newName.getTime());
+      // if (newName != null) {
+      // }
+    });
+
     watch(select_tinh, (newName, oldName) => {
       // gọi hàm select_coQuanDonVi  khi name thay đổi
       console.log("watch tỉnh", newName, oldName);
@@ -335,25 +367,19 @@ export default {
 
     watch(select_quan, (n, o) => {
       console.log(n, o);
+      console.log("quận", n, o);
       get_phuong(n.maMuc).then((datas) => {
         data_phuong.value = datas.data.content;
       });
     });
 
-    const get_danhsachcanbo = async () => {
-      data_tinh.value = await get_tinh();
-      data_tinh.value = data_tinh.value.data.content;
-      // data_tinh.value = Array.from(data_tinh.value, (e) => ({
-      //   tenGoi: e.tenGoi,
-      //   maHanhChinh: e.maHanhChinh,
-      // }));
-      // console.log(data_tinh.value[0].tenGoi);
-    };
-    get_danhsachcanbo();
-
     get_gioitinh().then((datas) => {
       gioiTinh.value = datas.data.content;
     });
+
+    // watch(select_gioiTinh, (n, o) => {
+    //   console.log("chon", n, o);
+    // });
 
     return {
       dialog,

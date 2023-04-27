@@ -136,7 +136,7 @@ export default {
 
     const items = ref([]);
 
-    console.log("tenCanBo:", propss);
+    // console.log("tenCanBo:", propss);
 
     const handleClick = () => {
       tenCanBo.value = propss.data_prop2;

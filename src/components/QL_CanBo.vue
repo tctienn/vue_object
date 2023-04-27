@@ -30,6 +30,14 @@
           HỆ THỐNG HỖ TRỢ SINH VIÊN - ĐẠI HỌC QUỐC GIA HÀ NỘI
         </v-card-text>
       </v-card>
+      <!-- // error -->
+      <v-alert
+        :type="err.type"
+        :title="err.title"
+        :text="err.text"
+        style="position: fixed; z-index: 1"
+        v-model="err.show"
+      ></v-alert>
 
       <v-container class="py-2 px-6" fluid>
         <h2 style="color: #2161b1">QUẢN LÝ CÁN BỘ</h2>
@@ -69,10 +77,12 @@
               :data_prop2="data"
               :check_select="arr_check"
               v-on:phanquyen="reload"
+              v-on:show_err="console.log('ay')"
             />
             <dialog_themcanbo
               :data_props="coQuanDonVi"
               v-on:themcanbo="reload"
+              v-on:show_err="err_show"
             />
           </div>
         </v-card>
@@ -110,17 +120,7 @@
                       ></v-card>
                     </td>
                   </tr>
-                  <tr
-                    v-for="(item, i) in data"
-                    :key="i"
-                    v-show="
-                      i + 1 >=
-                        (page_number == 1
-                          ? page_number
-                          : page_number * 8 - 8) &&
-                      i + 1 < (page_number == 1 ? 8 : page_number * 8 + 2)
-                    "
-                  >
+                  <tr v-for="(item, i) in data" :key="i">
                     <td>
                       <input
                         type="checkbox"
@@ -160,33 +160,26 @@
                     </td>
                     <!-- <td>{{ item.TinhTrang }}</td> -->
                     <td style="text-align: center">
-                      <!-- <dialog_capnhatt v-bind:dataprop="item" @reload_get_tt="reload_get" /> -->
-                      <v-icon
-                        color="red"
-                        style="cursor: pointer"
-                        size="{1}"
-                        v-if="item.EmailVNU != 'suadminTest@gmail.com'"
-                        >mdi-pen</v-icon
-                      >
+                      <dialog_updatecanbo
+                        :data_props="coQuanDonVi"
+                        :itemCheck="item"
+                        v-on:themcanbo="reload"
+                      />
                     </td>
                   </tr>
                 </table>
               </v-container>
             </v-main>
             <div class="d-flex justify-space-between mb-6 pa-2">
-              <div>Tổng số: {{ data.length }}</div>
+              <div>Tổng số: {{ page.count_item }}</div>
               <v-pagination
                 v-model="page_number"
                 :total-visible="1"
-                :length="Math.ceil(data.length / 8)"
+                :length="page.page_size"
               >
               </v-pagination>
               <select class="select_page pl-2 pr-2" v-model="page_number">
-                <option
-                  v-for="i in Math.ceil(data.length / 8)"
-                  :key="i"
-                  :value="i"
-                >
+                <option v-for="i in page.page_size" :key="i" :value="i">
                   Trang {{ i }}
                 </option>
               </select>
@@ -209,19 +202,30 @@ import { getcanbo, getcanbo_by_coQuan, get_coquandonvi } from "@/api/api";
 // import { api_menu } from '@/api/api';
 // import {  getcanbo } from '@/api/api';
 import dialog_phanQuyen from "./component/dialog_phanQuyen.vue";
+import dialog_updatecanbo from "./component/dialog_updatecanbo.vue";
 export default {
   name: "CanBo",
   components: {
     Menu,
     dialog_themcanbo,
     dialog_phanQuyen,
+    dialog_updatecanbo,
   },
   setup() {
     const page_number = ref(1);
-
+    const page = ref({
+      page_size: 0,
+      count_item: 0,
+    });
     const data = ref([]);
     const old_data = ref([]);
     const coQuanDonVi = ref([]);
+    const err = ref({
+      show: false,
+      text: "",
+      type: "success",
+      title: "",
+    });
     const select_coQuanDonVi = ref([]);
 
     const value_search = ref("");
@@ -230,22 +234,33 @@ export default {
 
     //// khởi tạo mảng check
     const arr_check = ref([]);
-    const get_danhsachcanbo = async () => {
-      const result = await getcanbo();
+    const get_danhsachcanbo = async (page_) => {
+      const result = await getcanbo(page_);
       // console.log("result", result);
       // data.value = await getcanbo();
       data.value = result.data.content;
-      alert("số lượng" + data.value.length);
+      page.value.page_size = result.data.totalPages;
+      page.value.count_item = result.data.totalElements;
       old_data.value = data.value; // dùng đẻ so sánh dữ liệu khi chạy tìm kiếm
       check_loading.value = false;
       // alert("ayyyy");
     };
-    get_danhsachcanbo();
+    get_danhsachcanbo(0);
 
     const reload = () => {
       //đang có lỗi khi đặt thẳng hàm get_danhsachcanbo lên sự kiện emit nên dùng tạm cái này lỗi:  ue warn]: Property "get_danhsachcanbo" was accessed during render but is not defined on instance.
 
-      get_danhsachcanbo();
+      get_danhsachcanbo(page_number.value - 1); // có thể sẽ ko update kịp trong trường hợp data chưa cập nhật xong trong database
+      err.value = {
+        show: true,
+        text: "thêm cán bộ thành công",
+        type: "success",
+        title: "thành công",
+      };
+
+      setTimeout(() => {
+        err.value.show = false;
+      }, 2000);
     };
 
     get_coquandonvi().then((cq) => {
@@ -255,7 +270,7 @@ export default {
         tenGoi: e.tenGoi,
         maHanhChinh: e.maHanhChinh,
       }));
-      console.log("cơ quan", coQuanDonVi.value);
+      // console.log("cơ quan", coQuanDonVi.value);
     });
 
     ////// lấy khóa của hững dòng được chọn
@@ -294,10 +309,19 @@ export default {
       data.value = result.data.content;
     };
 
-    // watch(data, (newVal) => {
-    //   console.log("data new:", newVal);
-    //   data.value = newVal;
-    // });
+    const err_show = () => {
+      alert("ay");
+      err.value = {
+        show: true,
+        text: "xem lại thông tin nhập",
+        type: "error",
+        title: "lỗi",
+      };
+
+      setTimeout(() => {
+        err.value.show = false;
+      }, 2000);
+    };
 
     watch(select_coQuanDonVi, (newName, oldName) => {
       // gọi hàm select_coQuanDonVi  khi name thay đổi
@@ -306,6 +330,12 @@ export default {
         get_danhsachcanbo_find_coQua(newName.maHanhChinh);
       }
       // alert(" watch cơ quan ", newName.values, oldName.values);
+    });
+
+    watch(page_number, (newName, oldName) => {
+      // gọi lấy dữ liệu theo số trang
+      console.log("watch cơ quan", newName, oldName);
+      get_danhsachcanbo(page_number.value - 1);
     });
 
     return {
@@ -329,6 +359,10 @@ export default {
       check_all,
       check_loading,
       reload,
+      page,
+      dialog_updatecanbo,
+      err,
+      err_show,
     };
   },
 };
