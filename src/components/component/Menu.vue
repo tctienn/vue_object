@@ -82,6 +82,7 @@
         width: 100%;
         background-color: #0468b1;
       "
+      @click="logout()"
     >
       <hr />
       <br />
@@ -96,6 +97,8 @@
 import { menu_pina } from "@/pinia/Store";
 import { ref } from "vue";
 import { geticon } from "@/api/icon";
+import { taocock } from "@/api/cookie";
+import { useRouter } from "vue-router";
 // import { ref } from 'vue';
 
 export default {
@@ -119,12 +122,20 @@ export default {
     pina_menu.actions_loadmenu().then(() => {
       links.value = pina_menu.menu.sort((a, b) => a.SoThuTu - b.SoThuTu);
     });
+    const router = useRouter();
+
+    const logout = () => {
+      // localStorage.removeItem('token')
+      taocock("login_token", "", "0");
+      router.replace("/");
+    };
 
     return {
       cards,
       drawer,
       links,
       geticon,
+      logout,
     };
   },
 };

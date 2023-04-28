@@ -293,6 +293,7 @@ export default {
     // };
 
     const search_name = () => {
+      console.log("serch", old_data.value);
       data.value = old_data.value.filter(
         (e) => e.HoVaTen.search(value_search.value) != -1
       );
