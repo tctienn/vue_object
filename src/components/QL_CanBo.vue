@@ -163,7 +163,7 @@
                       <dialog_updatecanbo
                         :data_props="coQuanDonVi"
                         :itemCheck="item"
-                        v-on:themcanbo="reload"
+                        v-on:updatecanbo="reload"
                       />
                     </td>
                   </tr>
@@ -253,7 +253,7 @@ export default {
       get_danhsachcanbo(page_number.value - 1); // có thể sẽ ko update kịp trong trường hợp data chưa cập nhật xong trong database
       err.value = {
         show: true,
-        text: "thêm cán bộ thành công",
+        text: " thành công",
         type: "success",
         title: "thành công",
       };

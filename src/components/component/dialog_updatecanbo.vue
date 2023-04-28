@@ -175,7 +175,7 @@
           class="bg-blue"
           style="width: max-content"
           @click="click_them_tt()"
-          ><v-icon>mdi-file-document-plus-outline</v-icon> Thêm mới</v-btn
+          ><v-icon>mdi-file-document-plus-outline</v-icon> cập nhật</v-btn
         >
       </v-card-actions>
       <!-- <v-card v-for="(item, i) in select" :key="i">
@@ -227,43 +227,79 @@ export default {
     const gioiTinh = ref([]);
     const select_gioiTinh = ref({});
 
+    // const handClick = async () => {
+    //   // chọn sẵn giới tính
+    //   select_gioiTinh.value = gioiTinh.value.filter(
+    //     (e) => e.maMuc == props.itemCheck.GioiTinh.MaMuc
+    //   );
+
+    //   const tinh = await get_tinh();
+    //   data_tinh.value = tinh.data.content;
+    //   select_tinh.value = data_tinh.value.find(
+    //     (e) => e.maMuc == props.itemCheck.diaChiThuongTru.TinhThanh.MaMuc
+    //   );
+
+    //   const quan = await get_quan(
+    //     props.itemCheck.diaChiThuongTru.TinhThanh.MaMuc
+    //   );
+    //   data_quan.value = quan.data.content;
+    //   select_quan.value = data_quan.value.find(
+    //     (e) => e.maMuc == props.itemCheck.diaChiThuongTru.QuanHuyen.MaMuc
+    //   );
+
+    //   // console.log("data", select_quan.value.maMuc);
+    //   const phuong = await get_phuong(
+    //     props.itemCheck.diaChiThuongTru.QuanHuyen.MaMuc
+    //   );
+    //   data_phuong.value = phuong.data.content;
+    //   select_phuong.value = data_phuong.value.find(
+    //     (e) => e.maMuc == props.itemCheck.diaChiThuongTru.PhuongXa.MaMuc
+    //   );
+
+    //   // console.log("quan", select_quan.value);
+
+    //   // lấy dữ liệu cơ quan đơn vị trừ cha
+    //   coQuanDonVi.value = props.data_props;
+
+    //   select_coQuanDonVi.value = coQuanDonVi.value.find(
+    //     (e) => e.MaHanhChinh == props.data_props.maHanhChinh
+    //   );
+    // };
+    var a = 0;
+    var a2 = 0;
     const handClick = () => {
+      // biến này để kiểm soát watch không chạy lần đầu tiên khi handclick
+      a = 0;
+      a2 = 0;
       // chọn sẵn giới tính
       select_gioiTinh.value = gioiTinh.value.filter(
         (e) => e.maMuc == props.itemCheck.GioiTinh.MaMuc
       );
-      get_tinh()
-        .then((tinh) => {
-          data_tinh.value = tinh.data.content;
-          select_tinh.value = data_tinh.value.find(
-            (e) => e.maMuc == props.itemCheck.diaChiThuongTru.TinhThanh.MaMuc
+      get_tinh().then((tinh) => {
+        data_tinh.value = tinh.data.content;
+        select_tinh.value = data_tinh.value.find(
+          (e) => e.maMuc == props.itemCheck.diaChiThuongTru.TinhThanh.MaMuc
+        );
+      });
+
+      get_quan(props.itemCheck.diaChiThuongTru.TinhThanh.MaMuc).then((quan) => {
+        data_quan.value = quan.data.content;
+        select_quan.value = quan.data.content.find(
+          (e) => e.maMuc == props.itemCheck.diaChiThuongTru.QuanHuyen.MaMuc
+        );
+        console.log("ayyyyyy", select_quan.value);
+      });
+      get_phuong(props.itemCheck.diaChiThuongTru.QuanHuyen.MaMuc).then(
+        (phuong) => {
+          data_phuong.value = phuong.data.content;
+          select_phuong.value = phuong.data.content.find(
+            (e) => e.maMuc == props.itemCheck.diaChiThuongTru.PhuongXa.MaMuc
           );
-        })
-        .then(() => {
-          get_quan(select_tinh.value.maMuc)
-            .then((quan) => {
-              data_quan.value = quan.data.content;
-              select_quan.value = quan.data.content.find(
-                (e) =>
-                  e.maMuc == props.itemCheck.diaChiThuongTru.QuanHuyen.MaMuc
-              );
-            })
-            .then(() => {
-              console.log("data", select_quan.value.maMuc);
-              get_phuong(select_quan.value.maMuc).then((phuong) => {
-                data_phuong.value = phuong.data.content;
-                select_phuong.value = phuong.data.content.find(
-                  (e) =>
-                    e.maMuc == props.itemCheck.diaChiThuongTru.PhuongXa.MaMuc
-                );
-              });
-            });
-          // console.log("quan", select_quan.value);
-        });
+        }
+      );
 
       // lấy dữ liệu cơ quan đơn vị trừ cha
       coQuanDonVi.value = props.data_props;
-
       select_coQuanDonVi.value = coQuanDonVi.value.find(
         (e) => e.MaHanhChinh == props.data_props.maHanhChinh
       );
@@ -331,7 +367,7 @@ export default {
         return;
       }
       post_updateCanBo(props.itemCheck.PrimKey, ay.value)
-        .then(() => contex.emit("themcanbo"))
+        .then(() => contex.emit("updatecanbo"))
         .catch(() => {
           // xử lý lỗi ở đây
 
@@ -357,10 +393,15 @@ export default {
     watch(select_tinh, (newName, oldName) => {
       // gọi hàm select_coQuanDonVi  khi name thay đổi
       console.log("watch tỉnh", newName, oldName);
-      get_quan(newName.maMuc).then((datas) => {
-        data_quan.value = datas.data.content;
-        data_phuong.value = [];
-      });
+
+      if (a > 0) {
+        get_quan(newName.maMuc).then((datas) => {
+          data_quan.value = datas.data.content;
+        });
+
+        select_phuong.value = {};
+      }
+      a++;
       // if (newName != null) {
       // }
     });
@@ -368,9 +409,13 @@ export default {
     watch(select_quan, (n, o) => {
       console.log(n, o);
       console.log("quận", n, o);
-      get_phuong(n.maMuc).then((datas) => {
-        data_phuong.value = datas.data.content;
-      });
+
+      if (a2 > 0) {
+        get_phuong(n.maMuc).then((datas) => {
+          data_phuong.value = datas.data.content;
+        });
+      }
+      a2++;
     });
 
     get_gioitinh().then((datas) => {
