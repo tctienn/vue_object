@@ -156,7 +156,7 @@ export const capnhat_tt = (PrimKey,data) => {
 /////menu
 
 export const api_menu = axios.create({
-    baseURL: 'http://119.17.200.66:8373/v1/datasharing/',
+    baseURL: 'http://119.17.200.66:8373/v1/datasharing',
     timeout: 10000, // set timeout to 10 seconds
     headers: {
         // Authorization: `Bearer ${ayy}`,
@@ -267,39 +267,122 @@ tr_canbo.interceptors.request.use(function(config) {
 });
 
 export const getcanbo   = (page) =>{
-    return  api_menu.get(`/canbo/filter?page=${page}&size=20&keyword=&orderFields=&orderTypes=&tinhTrang=&thamChieu_maMuc=`)
+    return  api_menu.get(`/canbo/filter`,{
+        params:{
+            page:page,
+            size:20,
+            keyword:'',
+            orderFields:'',
+            orderTypes:'',
+            tinhTrang:'',
+            thamChieu_maMuc:''
+        }
+    })
     // console.log('get data canbo ' , data.data.content.length)
     // console.log('ayyyy')
    
 }
 
 export const getcanbo_by_coQuan   = (data_) =>{
-    return  api_menu.get(`/canbo/filter?page=0&size=20&keyword=&orderFields=&orderTypes=&tinhTrang=&thamChieu_maMuc=&coQuanDonVi_maHanhChinh=${data_}`)
+    return  api_menu.get(`/canbo/filter`,{
+        params:{
+            page:0,
+            size:20,
+            keyword:'',
+            orderFields:'',
+            orderTypes:'',
+            tinhTrang:'',
+            thamChieu_maMuc:'',
+            coQuanDonVi_maHanhChinh:data_
+        }
+    })
 
    
 }
 
 export const get_coquandonvi =()=>{
-    return api_menu.get('/coquandonvi/filter?page=0&size=100&keyword=&orderFields=&orderTypes=&tinhTrang=&thamChieu_maMuc=')
+    return api_menu.get('/coquandonvi/filter',{
+        params:{
+            page:0,
+            size:100,
+            keyword:'',
+            orderFields:'',
+            orderTypes:'',
+            tinhTrang:'',
+            thamChieu_maMuc:''
+        }
+    })
 }
 
 export const get_tinh=()=>{
-    return api_menu.get('/tinhthanh/filter?page=0&size=20&keyword=&orderFields=&orderTypes=&tinhTrang=1&thamChieu_maMuc=')
+    return api_menu.get('/tinhthanh/filter',{
+        params:{
+            page:0,
+            size:20,
+            keyword:'',
+            orderFields:'',
+            orderTypes:'',
+            tinhTrang:1,
+            thamChieu_maMuc:''
+        }
+    })
 }
 
 export const get_quan =(maq)=>{
-    return api_menu.get(`/quanhuyen/filter?page=0&size=20&keyword=&orderFields=&orderTypes=&thamChieu_maMuc=${maq}&tinhTrang=1`)
+   
+    return api_menu.get(`/quanhuyen/filter`,{
+        params:{
+            page:0,
+            size:20,
+            keyword:'',
+            orderFields:'',
+            orderTypes:'',
+            thamChieu_maMuc:maq,
+            tinhTrang:1
+        }
+    })
 }
 
 export const get_phuong =(map)=>{
-    return api_menu.get(`/phuongxa/filter?page=0&size=20&keyword=&orderFields=&orderTypes=&thamChieu_maMuc=${map}&tinhTrang=1`)
+    return api_menu.get(`/phuongxa/filter`,{
+        params:{
+            page:0,
+            size:20,
+            keyword:'',
+            orderFields:'',
+            orderTypes:'',
+            thamChieu_maMuc:map,
+            tinhTrang:1
+        }
+    })
 }
 export const get_gioitinh = ()=>{
-    return api_menu.get('/gioitinh/filter?page=0&size=20&keyword=&orderFields=&orderTypes=&tinhTrang=1&thamChieu_maMuc=')
+    return api_menu.get('/gioitinh/filter',{
+        params:{
+            page:0,
+            size:20,
+            keyword:'',
+            orderFields:'',
+            orderTypes:'',
+            tinhTrang:1,
+            thamChieu_maMuc:''
+        }
+    })
 }
 
 export const get_nhomQuyen = ()=>{
-    return api_menu.get('/nhomquyen/filter?page=0&size=20&keyword=&orderFields=&orderTypes=&tinhTrang=1&thamChieu_maMuc=&=&=')
+    return api_menu.get('/nhomquyen/filter',{
+        params:{
+            page:0,
+            size:20,
+            keyword:'',
+            orderFields:'',
+            orderTypes:'',
+            tinhTrang:1,
+            thamChieu_maMuc:'',
+            
+        }
+    })
 }
 
 export const post_capQuyen = (data)=>{
@@ -314,6 +397,8 @@ export const post_themCanBo = (data) =>{
 export const post_updateCanBo = (PrimKey,data) =>{
     return api_menu.post(`/canbo/${PrimKey}`,data)
 }
+
+
 api_menu.interceptors.response.use(function(response) {
     // Trả về dữ liệu phản hồi
     // console.log('ay :', response)
@@ -325,8 +410,52 @@ api_menu.interceptors.response.use(function(response) {
 }, function(error) {
     // Xử lý lỗi
     // window.location.href = "http://localhost:8080/";
-    
+    if(error.response.status === 401){
+        console.log('ây có lỗi 401 địa chỉ api menu ');
+        window.location.href = "/";
+    }
     console.log('lỗi request qpi cán bộ')
     return Promise.reject(error);
 });
 
+export const get_sinhVien=(page)=>{
+    return api_menu.get(`/sinhvien/filter`,{params:{  //  đây là một  query params nó khác hẳn với Parameter (API Endpoint) (thuật ngữ) : /sinhvien/filter đây mới là Parameter (API Endpoint) , query(thuật ngữ) : để lọc các giá trị của trả về của server  , params (thuật ngữ) : thường được sử dụng để chỉ các tham số được truyền vào trong phần thân của một request, thường là ở phương thức HTTP POST
+        page:page,
+        size:20,
+        keyword:'',
+        orderFields:'',
+        orderTypes:'',
+        tinhTrang:'',
+        thamChieu_maMuc:''
+    }})
+}
+
+export const post_themSinhVien = (data)=>{
+    
+    return api_menu.post('/sinhvien',data)
+}
+
+export const post_themThuMucAnh = (key,data) =>{
+    return api_menu.post(`/sinhvien/${key}`,data)
+}
+
+export const post_capNhatSinhVien = (key,data) =>{
+    return api_menu.post(`/sinhvien/${key}`,data)
+}
+
+
+export const upload_img = (formData)=>{
+    console.log("files:...", formData.get("files"))
+    let config = {
+        method: 'post',
+        url: 'http://119.17.200.66:8373/v1/datasharing/album/upload' ,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        data: formData,
+        params: {}
+      }
+
+    return axios(config)
+}

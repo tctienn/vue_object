@@ -43,11 +43,12 @@
       <br />
       <hr />
       <v-list-item
-        v-for="(item, i) in links"
+        v-for="item in links"
         :key="item.TenMenu"
         link
         v-show="item.LoaiMenu == '0'"
-        :active="i <= 1 ? true : false"
+        :active="item.DuongDan == pathname"
+        @click="chuyenTrang(item.DuongDan)"
       >
         <template v-slot:prepend>
           <v-icon color="white" style="opacity: 1">{{
@@ -81,13 +82,16 @@
         color: white;
         width: 100%;
         background-color: #0468b1;
+        border: red;
       "
       @click="logout()"
     >
       <hr />
-      <br />
-      <v-icon class="ml-5"> mdi-power </v-icon>
-      đăng xuất
+
+      <div class="pa-4">
+        <v-icon class="ml-5"> mdi-power </v-icon>
+        đăng xuất
+      </div>
       <!-- <Icon icon="mdi:map-marker-distance" /> -->
     </div>
   </v-navigation-drawer>
@@ -106,18 +110,14 @@ export default {
   setup() {
     const cards = ["Today", "Yesterday"];
     var drawer = "";
-    // const links = [
-    //   ['mdi-note-plus-outline', 'Tạo báo cáo'],
-    //   ['mdi-autorenew', 'Báo cáo chờ sử lý'],
-    //   ['mdi-clipboard-text-clock-outline', 'Báo cáo chờ duyệt'],
-    //   ['mdi-file-chart-outline', 'Tổng hợp báo cáo'],
-    //   ['mdi-chart-areaspline', 'Kỳ báo cáo'],
 
     // ]
     const links = ref([]);
 
     //// pinia menu
     const pina_menu = menu_pina();
+
+    const pathname = window.location.pathname;
 
     pina_menu.actions_loadmenu().then(() => {
       links.value = pina_menu.menu.sort((a, b) => a.SoThuTu - b.SoThuTu);
@@ -130,12 +130,18 @@ export default {
       router.replace("/");
     };
 
+    const chuyenTrang = (href) => {
+      router.replace(href);
+    };
+
     return {
       cards,
       drawer,
       links,
       geticon,
       logout,
+      pathname,
+      chuyenTrang,
     };
   },
 };

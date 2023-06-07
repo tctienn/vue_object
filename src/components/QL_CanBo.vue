@@ -31,13 +31,6 @@
         </v-card-text>
       </v-card>
       <!-- // error -->
-      <v-alert
-        :type="err.type"
-        :title="err.title"
-        :text="err.text"
-        style="position: fixed; z-index: 1"
-        v-model="err.show"
-      ></v-alert>
 
       <v-container class="py-2 px-6" fluid>
         <h2 style="color: #2161b1">QUẢN LÝ CÁN BỘ</h2>
@@ -151,11 +144,6 @@
                         item.ListQuyenCanBo?.map(
                           (obj) => obj.TenNhomQuyen
                         ).join(", ")
-                      }}
-                      {{
-                        item.PhanQuyenChuyenMuc?.map(
-                          (obj) => obj.TenNhomQuyen
-                        ).join(",")
                       }}
                     </td>
                     <!-- <td>{{ item.TinhTrang }}</td> -->
@@ -288,19 +276,11 @@ export default {
       } else arr_check.value = [];
     };
 
-    // const change_coQuan = () => {
-    //   console.log("ayyyy");
-    // };
-
     const search_name = () => {
       console.log("serch", old_data.value);
       data.value = old_data.value.filter(
         (e) => e.HoVaTen.search(value_search.value) != -1
       );
-
-      // console.log("ui", search_name.value);
-
-      // alert("ay");
     };
 
     const get_danhsachcanbo_find_coQua = async (data_) => {
@@ -311,7 +291,6 @@ export default {
     };
 
     const err_show = () => {
-      alert("ay");
       err.value = {
         show: true,
         text: "xem lại thông tin nhập",

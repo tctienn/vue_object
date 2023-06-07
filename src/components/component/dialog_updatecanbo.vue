@@ -454,7 +454,7 @@ export default {
 };
 </script>
 
-<style >
+<style scoped>
 #ay {
   height: 90vh;
   overflow-y: scroll;

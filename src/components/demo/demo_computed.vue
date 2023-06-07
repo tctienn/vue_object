@@ -9,7 +9,7 @@
   <br />
   <input type="text" placeholder="watch" v-model="message" />
   {{ message }}
-  /
+
   {{ computed_ }}
 </template>
 

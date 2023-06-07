@@ -50,3 +50,50 @@ export const useCounterStore = defineStore("counter", {
     }
 
 )
+
+
+export const status_load = defineStore("status_load", {
+    state: () => {
+        return { 
+            QL_sv:false,
+            status_alert:{
+                check : false,
+                text :"ok",
+                type:"success",
+                title:"ok"
+      
+            }
+        }
+    },
+    actions: {
+        load() {
+            this.QL_sv = true
+
+            console.log("load")
+        },
+        unload() {
+            this.QL_sv = false;
+        },
+        alert(title, text , type){
+            this.status_alert = {
+                check : true,
+                text :text,
+                type:type,
+                title:title
+      
+            }
+            
+            setTimeout(() => {
+                this.status_alert.check = false;
+              }, 4000);
+        },
+        
+    },
+    getters: {
+        status_load: (state) =>state.QL_sv,
+        alert_tatus:(state) => state.status_alert
+    }
+
+}
+
+)

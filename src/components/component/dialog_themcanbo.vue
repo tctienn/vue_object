@@ -215,6 +215,7 @@ export default {
     Datepicker,
   },
   props: ["data_props"],
+
   setup(props, contex) {
     const dialog = ref(false);
     const maCanBo = ref("test");
@@ -383,7 +384,7 @@ export default {
 };
 </script>
 
-<style >
+<style  scoped>
 #ay {
   height: 90vh;
   overflow-y: scroll;

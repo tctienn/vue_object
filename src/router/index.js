@@ -31,6 +31,10 @@ import QL_CanBoVue from "@/components/QL_CanBo.vue";
 import dateVue from "@/components/demo/date.vue";
 // import table from "../components/demo/table.vue"
 import demo_tabe from "@/components/demo/demo_tabe.vue";
+import QLSinhVien from "@/components/QL_SinhVien.vue";
+import Error_page from "@/components/Error_page.vue"
+
+import demo_checknull from "@/components/demo/demo_checknull.vue"
 // import Table
 // import QL_CanBoVue from "@/components/QL_CanBo.vue";
 
@@ -65,7 +69,7 @@ const routes = [{ /// sử dụng router hạn chế dùng thẻ a mà nên dùn
         component: demo_computedVue
     },
     {
-        path:'/canbo',
+        path:'/quan-li-can-bo',
         component:QL_CanBoVue
     },
     {
@@ -75,7 +79,16 @@ const routes = [{ /// sử dụng router hạn chế dùng thẻ a mà nên dùn
     {
         path:"/table",
         component: demo_tabe
-    }
+    },
+    {
+        path:"/quan-li-sinh-vien",
+        component: QLSinhVien
+    },
+    {
+        path:"/demochecknull",
+        component: demo_checknull
+    },
+
 
     
 
@@ -83,7 +96,10 @@ const routes = [{ /// sử dụng router hạn chế dùng thẻ a mà nên dùn
     //     patch: '/axios',
     //     component: AxiosDemo
     // }
-    // { patch: '/:pathMatch(.*)*', component: Error } // lỗi đườn dẫn
+    { 
+        path: '/:pathMatch(.*)*', 
+        component: Error_page 
+    } // lỗi đườn dẫn
 
 ]
 
