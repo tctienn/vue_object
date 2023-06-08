@@ -36,7 +36,7 @@
               display: inline-block;
               position: relative;
             "
-            v-for="(e, i) in data_sinhvien.MainImage"
+            v-for="(e, i) in sinhvien.MainImage"
             :key="i"
           >
             <v-icon
@@ -47,7 +47,7 @@
                 cursor: pointer;
               "
               size="25"
-              @click="delete_image"
+              @click="delete_image_c(e.Id)"
             >
               mdi-close-circle
             </v-icon>
@@ -108,7 +108,7 @@
 
 <script>
 import { ref } from "vue";
-import { post_themThuMucAnh, upload_img } from "@/api/api";
+import { delete_image_, post_themThuMucAnh, upload_img } from "@/api/api";
 import { status_load  } from "@/pinia/Store";
 import { toRefs } from "vue";
 import { watch } from "vue";
@@ -118,8 +118,8 @@ export default {
   name: "DiaLog_themcanbo",
 
   props: ["sinhvien", "prop_type"],
-  emits: ["reload"],
-  setup(props, { emit }) {
+  // emits: ["reload"],
+  setup(props) {
     const dialog = ref(false);
     const nameFoder = ref("");
     const {sinhvien} = toRefs(props)
@@ -133,9 +133,9 @@ export default {
 
     const pinia_status_load = status_load();
 
-    const delete_image = () => {
-      emit("reload");
-    };
+    // const delete_image = () => {
+    //   emit("reload");
+    // };
     // const reload = () => {
     //   emit("reload");
     // };
@@ -168,12 +168,25 @@ export default {
 
       console.log("formdata:.... ", formData)
 
-      upload_img(formData, file).then(()=>
+      upload_img(formData, file).then(()=>{
         console.log("ok")
+        pinia_status_load.load();
+      }
       ).catch(err=>{
         console.log('loi',err)
       })
 
+    }
+
+    const delete_image_c =(MainImage)=>{
+      // console.log('key',sinhvien.PrimKey)
+      delete_image_(sinhvien.value.PrimKey,MainImage).then(()=>{
+        console.log('deleteed')
+        pinia_status_load.load();
+      })
+      .catch((er)=>{
+        console.log('loi ', er)
+      })
     }
 
     return {
@@ -183,10 +196,12 @@ export default {
       addFoder,
 
       action,
-      delete_image,
+      // delete_image,
       pinia_status_load,
 
-      onselectFile
+      onselectFile,
+
+      delete_image_c
     };
   },
 };

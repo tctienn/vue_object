@@ -182,7 +182,7 @@
                     <td>
                       {{ i + 1 }}
                     </td>
-                    <td>{{ item.HoVaTen }} | {{ item.ThuMucAnh[0]?.MaThuMuc }}</td>
+                    <td>{{ item.HoVaTen }} </td>
                     <td>{{ item.CoQuanDonVi.MaHanhChinh }}</td>
                     <td>{{ item.MaSinhVien }}</td>
                     <td>{{ item.EmailVNU }}</td>

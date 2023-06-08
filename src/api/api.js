@@ -445,7 +445,7 @@ export const post_capNhatSinhVien = (key,data) =>{
 
 
 export const upload_img = (formData)=>{
-    console.log("files:...", formData.get("files"))
+    // console.log("files:...", formData.get("files"))
     
     var token = getCookie('login_token')
     let config = {
@@ -458,6 +458,27 @@ export const upload_img = (formData)=>{
           Authorization: `Bearer ${token}`,
         },
         data: formData,
+        params: {}
+      }
+
+    return axios(config)
+}
+
+export const delete_image_ = (PrimKey, MainImage) =>{
+    // return api_menu.delete(`album/${PrimKey}/attachment/${MainImage}`)
+
+
+    var token = getCookie('login_token')
+    let config = {
+        method: 'delete',
+        url: `http://119.17.200.66:8373/v1/datasharing/album/${PrimKey}/attachment/${MainImage}` ,
+        headers: {
+          'Accept': 'application/json',
+        //   'Content-Type': 'application/json',
+        //   'Content-Type':'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+        data: '',
         params: {}
       }
 

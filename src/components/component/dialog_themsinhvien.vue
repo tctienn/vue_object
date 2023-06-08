@@ -70,10 +70,7 @@
             density="compact"
             label="chọn"
             :single-line="true"
-            :error-messages="v$.name.$errors.map((e) => e.$message)"
-            required
-            @change="v$.name.$touch"
-            @blur="v$.name.$touch"
+            
             
             class=""
           ></v-select>
@@ -363,8 +360,7 @@ import {
   post_themSinhVien,
 } from "@/api/api";
 
-import { useVuelidate } from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
+
 import dialog_addFoder from "./dialog_addFoder.vue";
 import { sinhvien_model } from "./model/sinhvien.js";
 import { status_load  } from "@/pinia/Store";
@@ -691,16 +687,9 @@ export default {
     });
 
     ////////// check null validete
-    const err_text = "Không được để trống.";
-    const state = ref({
-      select_coQuanDonVi,
-    });
-    const rules = {
-      name: { required },
-      // TinhThanh: { required },
-    };
+    
 
-    const v$ = useVuelidate(rules, state);
+    
     //
     const checkNull = ref({
       name: {
@@ -808,9 +797,9 @@ export default {
       maNhapHoc,
       SoHoSo,
 
-      v$,
-      err_text,
-      state,
+      
+
+      
       checkNull,
       checkNull_on,
       err,
@@ -829,6 +818,26 @@ export default {
 .v-field__outline {
   --v-field-border-opacity: 0.2;
 }
+
+.v-input__control{
+  min-height: 33px !important;
+  height: 33px !important;
+
+}
+.v-field__input{
+  font-size: 14px !important;
+  padding: 6px 0 0 9px !important;
+}
+
+.v-label.v-field-label{
+  /* position:static !important; */
+  margin:0 !important;
+  top: 3px !important;
+  left: 8px;
+  /* margin: 3px 0 0 8px !important; */
+  max-width:max-content;
+}
+
 </style>
 
 <style  scoped>
