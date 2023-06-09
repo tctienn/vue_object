@@ -32,7 +32,7 @@
 
       <v-container class="py-2 px-6" fluid>
         
-        <div style="display: flex">
+        <div style="display: flex ; color:#2161b1">
           <h4 >QUẢN LÝ CHUYÊN MỤC TIN TỨC</h4>
           
         </div>

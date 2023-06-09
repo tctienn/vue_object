@@ -9,9 +9,9 @@
 
   <v-dialog v-model="dialog" style="margin: auto; width: 80%">
     <template v-slot:activator="{ props }">
-      <v-btn color="blue" v-bind="props" style="float: right">
+      <v-btn color="#2161b1" v-bind="props" class="pl-2 pr-2" style="float: right; color: white;">
         <v-icon> mdi-plus-circle-outline </v-icon>
-        Thêm thành phần
+        <small>Thêm thành phần</small>
       </v-btn>
     </template>
 
