@@ -32,12 +32,6 @@
 
       <v-container class="py-2 px-6" fluid>
         
-
-       
-
-        
-
-
         <div style="display: flex">
           <h4 >QUẢN LÝ CHUYÊN MỤC TIN TỨC</h4>
           
@@ -118,7 +112,7 @@
                           <v-btn color="green-darken-1" variant="text" @click="dialog = false">
                             không
                           </v-btn>
-                          <v-btn color="green-darken-1" variant="text" @click="dialog = false">
+                          <v-btn color="green-darken-1" variant="text" @click="onDelete(item)">
                             có
                           </v-btn>
                         </v-card-actions>
@@ -160,7 +154,7 @@
 
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import {  get_Tintuc } from "@/api/api";
+import {  get_Tintuc ,delete_xoaTinTuc } from "@/api/api";
 
 import dialog_themttVue from "./component/dialog_themtt.vue";
 import dialog_capnhatt from "./component/dialog_capnhatt.vue";
@@ -244,6 +238,22 @@ export default {
 
       // alert(data.value.length)
     };
+
+    const onDelete = (item) =>{
+      // console.log('ay ', item)
+      delete_xoaTinTuc(item.PrimKey).then(()=>{
+        console.log('deleted')
+        load_Data(page_number.value-1)
+        dialog.value = false
+
+        pinia_status_load.load();
+        pinia_status_load.alert("thành công", "xóa thành công" , "success")
+      })
+      .catch((er)=>{
+        console.log('lỗi không xóa được ' , er)
+      })
+    }
+
     return {
       cards,
       drawer,
@@ -256,7 +266,8 @@ export default {
       logout,
       reload_them,
       pinia_status_load,
-      dialog
+      dialog,
+      onDelete
     };
   },
 };

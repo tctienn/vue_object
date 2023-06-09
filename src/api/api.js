@@ -535,7 +535,7 @@ export const delete_xoaTinTuc = (PrimKey)=>{
         url: `http://119.17.200.66:8373/v1/datasharing/chuyenmuctintuc/${PrimKey}` ,
         headers: {
           'Accept': 'application/json',
-        //   'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
         //   'Content-Type':'multipart/form-data',
           Authorization: `Bearer ${token}`,
         },
