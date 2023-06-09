@@ -37,9 +37,12 @@
       </div>
 
       <div class="body_view">
-        <div class="view_left">
-          <div>Thông tin cơ bản  </div>
+        <div class="view_left" style="position: relative;">
+          <div style="font-size: 140%; position: absolute; left: 10px; top: 15px ;" ><b>Thông tin cơ bản</b>  </div>
           <br />
+          <br/>
+          <br/>
+          
           <div class="row_view">
             Họ và tên: <b>{{ data.name }}</b>
           </div>
@@ -65,9 +68,11 @@
           <hr />
           <br />
         </div>
-        <div class="view_right">
-          <div>Thông tin hành chính</div>
+        <div class="view_right" style="position: relative;">
+          <div style="font-size: 140%; position: absolute; left: 10px; top: 15px ;" ><b>Thông tin hành chính</b>  </div>
           <br />
+          <br/>
+          <br/>
           <div class="row_view">
             Mã sinh viên:<b>{{ data.masv }}</b>
           </div>
@@ -95,15 +100,15 @@
         </div>
       </div>
       <v-card-actions
-        style="display: flex; justify-content: flex-end; background: #eee"
+        style="display: flex; justify-content: center; background: #eee ; text-align: center; padding-bottom: 20px;"
       >
         <v-btn
           color="white"
           class="bg-red"
           style="width: max-content"
           @click="dialog1 = false"
-          ><v-icon>mdi-close</v-icon> Thoát</v-btn
         >
+          <v-icon>mdi-close</v-icon> Thoát</v-btn>
 
         <dialog_themsinhvien
           :typee="{ data: datas, type: 'update' }"

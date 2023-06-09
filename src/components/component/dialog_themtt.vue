@@ -1,4 +1,12 @@
 <template>
+  <v-alert
+      :type="pinia_status_load.alert_tatus.type"
+      :title="pinia_status_load.alert_tatus.title"
+      :text="pinia_status_load.alert_tatus.text"
+      style="position: fixed; z-index: 1"
+      v-model="pinia_status_load.alert_tatus.check">
+  </v-alert>
+
   <v-dialog v-model="dialog" style="margin: auto; width: 80%">
     <template v-slot:activator="{ props }">
       <v-btn color="blue" v-bind="props" style="float: right">
@@ -7,8 +15,8 @@
       </v-btn>
     </template>
 
-    <v-card>
-      <v-card class="pt-5 pb-5 bg-blue">
+    <v-card id="ay">
+      <v-card class="pt-3 pb-8 bg-blue">
         <div
           style="
             display: flex;
@@ -22,7 +30,7 @@
           <v-icon block @click="dialog = false"> mdi-close </v-icon>
         </div>
       </v-card>
-      <v-card class="ml-4 mt-4" flat>
+      <div class="ml-4 mt-4">
         <h4>Mã chuên mục: <span class="text-red">*</span></h4>
         <input
           type="text"
@@ -74,11 +82,7 @@
 
           <div class="input_tt">
             <h4>Nhóm quền:</h4>
-            <!-- <select class="input_select" multiple>
-                        <option value="" >chọn</option>
-                        <option value="ddf8e704-436c-49a7-9a49-530cf90a68b2-u3ujiaelx512e8ip">Admin cấp 1</option>
-                        <option value="Admin cấp đơn vị">Admin cấp đơn vị</option>
-                      </select> -->
+ 
 
             <v-select
               clearable
@@ -91,6 +95,8 @@
               return-object
               multiple
               variant="solo"
+              :single-line="true"
+              class="ay"
             ></v-select>
 
             {{ select.map((e) => e.state).join(",") }}
@@ -108,13 +114,15 @@
 
           <div class="input_tt">
             <h4>Tình trạng:</h4>
-            <select class="input_select" v-model="tinhtrang">
-              <option value="">chọn</option>
-              <option value="Hoạt động">Hoạt động</option>
+            <select class="input_select" v-model="tinhtrang"  placeholder="Chọn">  
+              
+              <option value="2">Hoạt động</option>
+              <option value="1">Không hoạt đông</option>
+
             </select>
           </div>
         </div>
-      </v-card>
+      </div>
       <v-card-actions class="mt-10 mb-10" style="margin: auto">
         <v-btn
           color="white"
@@ -140,11 +148,12 @@
 
 <script>
 import { ref } from "vue";
-import { them_tt } from "@/api/api";
+import { post_themTinTuc } from "@/api/api";
+import { status_load } from "@/pinia/Store";
 
 export default {
   name: "DiaLog",
-  setup(props, contex) {
+  setup() {
     const dialog = ref(false);
     const machuyenmuc = ref("test");
     const tenchuyenmuc = ref("test");
@@ -155,6 +164,8 @@ export default {
     const tinhtrang = ref("");
 
     const select = ref([]);
+
+    const pinia_status_load = status_load();
 
     const items = ref([
       {
@@ -183,41 +194,24 @@ export default {
         TenNhomQuyen: "Admin cấp đơn vị",
       },
     ]);
+
+   
     const click_them_tt = () => {
-      them_tt({
-        MaChuyenMuc: machuyenmuc.value,
-        TenChuyenMuc: tenchuyenmuc.value,
-        TenTiengAnh: tentiengAnh.value,
-        SoThuTu: stt.value,
-        TinhTrang: tinhtrang.value,
-        MaChuyenMucCha: chuyenmuccha.value,
-        PhanQuyenChuyenMuc: select.value,
-      })
-        .then(
-          (respon) => console.log("respon", respon),
-          (dialog.value = false),
-          contex.emit("themtt", {
-            MaChuyenMuc: machuyenmuc.value,
-            TenChuyenMuc: tenchuyenmuc.value,
-            TenTiengAnh: tentiengAnh.value,
-            SoThuTu: stt.value,
-            TinhTrang: tinhtrang.value,
-            MaChuyenMucCha: chuyenmuccha.value,
-            PhanQuyenChuyenMuc: select.value,
-          })
+      post_themTinTuc(machuyenmuc.value,tenchuyenmuc.value,tentiengAnh.value,stt.value,tinhtrang.value,chuyenmuccha.value,select.value)
+      .then(()=> {
+        dialog.value = false
+        pinia_status_load.load();
+        pinia_status_load.alert("thành công", "Thêm thành công" , "success")
+        
+         
+      }
+          
         )
         .catch((error) => {
           console.log("LOI dialog thêm ti tức ", error.response);
         });
 
-      // contex.emit('themtt',  {"MaChuyenMuc":machuyenmuc.value,
-      //     "TenChuyenMuc":tenchuyenmuc.value,
-      //     "TenTiengAnh":tentiengAnh.value,
-      //     "SoThuTu":stt.value,
-      //     "TinhTrang":tinhtrang.value,
-      //     "MaChuyenMucCha":chuyenmuccha.value,
-      //     "PhanQuyenChuyenMuc":select.value})
-      // console.log(select.value)
+
     };
 
     return {
@@ -232,6 +226,8 @@ export default {
       click_them_tt,
       items,
       select,
+      pinia_status_load,
+      
     };
   },
 };
@@ -239,20 +235,31 @@ export default {
 
 <style scoped>
 .border_input {
-  border: solid 1px rgb(174, 174, 174);
-  border-radius: 5px;
-  padding: 10px;
+  border: solid 1px rgb(209 209 209);
+    border-radius: 5px;
+    padding: 5px 0 5px 7px;
+    font-size: 15px;
 }
 
 .input_tt {
-  width: 45%;
+  width: 47%;
   /* border: solid 1px black; */
   margin: 10px 21px 10px 0;
 }
 
 .input_select {
-  border: solid 1px rgb(128, 128, 128);
-  width: 100%;
-  padding: 10px;
+  border: solid 1px rgb(206 206 206);
+    width: 100%;
+    padding: 5px 0 5px 7px;
+    border-radius: 7px;
 }
+
+#ay {
+  height: 66vh;
+  overflow-y: scroll;
+}
+.ay{
+  height: 38px;
+}
+
 </style>

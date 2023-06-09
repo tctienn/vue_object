@@ -484,3 +484,65 @@ export const delete_image_ = (PrimKey, MainImage) =>{
 
     return axios(config)
 }
+
+
+export const get_Tintuc = (page)=>{
+    return api_menu.get(`/chuyenmuctintuc/filter`,{
+        params:{
+            page:page,
+            size:"20",
+            keyword:"",
+            orderFields:"",
+            orderTypes:'',
+            tinhTrang:'',
+            thamChieu_maMuc:'',
+            NgayTaoFrom:'0',
+            NgayTaoTo:'0',
+        }
+    })
+}
+
+export const post_themTinTuc = (MaChuyenMuc,TenChuyenMuc,TenTiengAnh,SoThuTu,TinhTrang,MaChuyenMucCha,PhanQuyenChuyenMuc_arr) =>{
+    return api_menu.post(`/chuyenmuctintuc`,{
+        MaChuyenMuc: MaChuyenMuc,
+        TenChuyenMuc: TenChuyenMuc,
+        TenTiengAnh: TenTiengAnh,
+        SoThuTu: SoThuTu,
+        TinhTrang: TinhTrang,
+        MaChuyenMucCha: MaChuyenMucCha,
+        PhanQuyenChuyenMuc: PhanQuyenChuyenMuc_arr
+    
+    })
+}
+
+export const post_capNhatTinTuc =(PrimKey,MaChuyenMuc,TenChuyenMuc,TenTiengAnh,SoThuTu,TinhTrang,MaChuyenMucCha,PhanQuyenChuyenMuc_arr) =>{
+    return api_menu.post(`/chuyenmuctintuc/${PrimKey}`,{
+        MaChuyenMuc: MaChuyenMuc,
+        TenChuyenMuc: TenChuyenMuc,
+        TenTiengAnh: TenTiengAnh,
+        SoThuTu: SoThuTu,
+        TinhTrang: TinhTrang,
+        MaChuyenMucCha: MaChuyenMucCha,
+        PhanQuyenChuyenMuc: PhanQuyenChuyenMuc_arr
+    })
+}
+
+export const delete_xoaTinTuc = (PrimKey)=>{
+
+    var token = getCookie('login_token')
+    let config = {
+        method: 'delete',
+        url: `http://119.17.200.66:8373/v1/datasharing/chuyenmuctintuc/${PrimKey}` ,
+        headers: {
+          'Accept': 'application/json',
+        //   'Content-Type': 'application/json',
+        //   'Content-Type':'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+        data: '',
+        params: {}
+      }
+
+    return axios(config)
+
+}

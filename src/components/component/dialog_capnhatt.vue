@@ -1,4 +1,7 @@
 <template>
+
+    
+
   <v-dialog v-model="dialog" style="margin: auto; width: 80%">
     <template v-slot:activator="{ props }">
       <v-icon color="#0468B1" v-bind="props" style="cursor: pointer" size="{1}"
@@ -6,7 +9,7 @@
       >
     </template>
 
-    <v-card>
+    <v-card id="ay">
       <v-card class="pt-5 pb-5 bg-blue">
         <div
           style="
@@ -21,7 +24,7 @@
           <v-icon block @click="dialog = false"> mdi-close </v-icon>
         </div>
       </v-card>
-      <v-card class="ml-4 mt-4" flat>
+      <div class="ml-4 mt-4" >
         <h4>Mã chuên mục: <span class="text-red">*</span></h4>
         <input
           type="text"
@@ -99,13 +102,15 @@
 
           <div class="input_tt">
             <h4>Tình trạng:</h4>
-            <select class="input_select" v-model="tinhtrang">
-              <option value="">chọn</option>
-              <option value="Hoạt động">Hoạt động</option>
+            <select class="input_select" v-model="tinhtrang" placeholder="Chọn">
+              
+              <option value="2">Hoạt động</option>
+              <option value="1">Không hoạt động</option>
+
             </select>
           </div>
         </div>
-      </v-card>
+      </div>
       <v-card-actions class="mt-10 mb-10" style="margin: auto">
         <v-btn
           color="white"
@@ -128,13 +133,18 @@
 
 <script>
 import { ref } from "vue";
-import { capnhat_tt } from "@/api/api";
+import {  post_capNhatTinTuc } from "@/api/api";
+import { status_load } from "@/pinia/Store";
+
+
 
 export default {
   name: "DiaLogcn",
   props: ["dataprop"],
 
-  setup(props, contex) {
+  setup(props,) {
+
+    
     const dialog = ref(false);
     const machuyenmuc = ref(props.dataprop.MaChuyenMuc);
     const tenchuyenmuc = ref(props.dataprop.TenChuyenMuc);
@@ -175,31 +185,22 @@ export default {
       },
     ]);
 
-    // var self = this;
-    function click_them_tt() {
-      capnhat_tt(props.dataprop.PrimKey, {
-        MaChuyenMuc: machuyenmuc.value,
-        TenChuyenMuc: tenchuyenmuc.value,
-        TenTiengAnh: tentiengAnh.value,
-        SoThuTu: stt.value,
-        TinhTrang: tinhtrang.value,
-        MaChuyenMucCha: chuyenmuccha.value,
-        PhanQuyenChuyenMuc: select.value,
-      }).then(
-        (respon) => console.log("capnhat", respon),
-        contex.emit("reload_get_tt", {
-          MaChuyenMuc: machuyenmuc.value,
-          TenChuyenMuc: tenchuyenmuc.value,
-          TenTiengAnh: tentiengAnh.value,
-          SoThuTu: stt.value,
-          TinhTrang: tinhtrang.value,
-          MaChuyenMucCha: chuyenmuccha.value,
-          PhanQuyenChuyenMuc: select.value,
-          idItem: props.dataprop.PrimKey,
-        })
-      );
+    const pinia_status_load = status_load();
+    
+    
 
-      dialog.value = false;
+    function click_them_tt() {
+      post_capNhatTinTuc(props.dataprop.PrimKey,machuyenmuc.value,tenchuyenmuc.value,tentiengAnh.value,stt.value,tinhtrang.value,chuyenmuccha.value,select.value)
+      .then( ()=>{
+        dialog.value = false
+        pinia_status_load.load();
+        pinia_status_load.alert("thành công", "cập nhật thành công" , "success")
+        
+          // setTimeout(() => {
+          //   err.value.show = false;
+          // }, 4000);
+      
+      } )
     }
 
     return {
@@ -216,6 +217,8 @@ export default {
 
       select,
       items,
+      
+      pinia_status_load
     };
   },
 };
@@ -223,24 +226,31 @@ export default {
 
 <style scoped>
 .border_input {
-  border: solid 1px rgb(129, 129, 129);
-  border-radius: 5px;
-  padding-left: 5px;
+  border: solid 1px rgb(209 209 209);
+    border-radius: 5px;
+    padding: 5px 0 5px 7px;
+    font-size: 15px;
 }
 
 .input_tt {
-  width: 45%;
+  width: 47%;
   /* border: solid 1px black; */
   margin: 10px 21px 10px 0;
 }
 
 .input_select {
-  border: solid 1px rgb(128, 128, 128);
-  width: 100%;
-  padding-left: 5px;
+  border: solid 1px rgb(206 206 206);
+    width: 100%;
+    padding: 5px 0 5px 7px;
+    border-radius: 7px;
 }
 
-.disabled_input {
-  opacity: 0.5;
+#ay {
+  height: 66vh;
+  overflow-y: scroll;
 }
+.ay{
+  height: 38px;
+}
+
 </style>

@@ -60,7 +60,7 @@ const routes = [{ /// sử dụng router hạn chế dùng thẻ a mà nên dùn
     },
     {
 
-        path: '/QLTinTuc',
+        path: '/quan-li-chuyen-muc-tin-tuc',
         component: TinTuc
     },
     {

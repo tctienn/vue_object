@@ -44,13 +44,7 @@
             margin: auto;
           "
         >
-          <!-- <v-alert
-            :type="err.type"
-            :title="err.title"
-            :text="err.text"
-            style="position: fixed; z-index: 1"
-            v-model="err.show"
-          ></v-alert> -->
+
           <div style="">Thêm mới cán bộ</div>
           <!-- <v-btn block @click="dialog = false" style="min-width: 0%;">Close Dialog</v-btn> -->
           <v-icon block @click="dialog = false"> mdi-close </v-icon>
