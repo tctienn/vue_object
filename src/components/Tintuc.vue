@@ -107,11 +107,11 @@
                         </v-icon>
                       </template>
                       <v-card width="20%" style="margin: auto;" >
-                        <v-card-title class="text-h5">
+                        <v-card-title class="text-h6">
                           Xóa loại chuyên mục tin tức
                         </v-card-title>
                         <v-card-text style="font-size: 20px;">
-                          Bạn có chắc chắn muốn xóa chuyên mục tin tức này
+                          <small>Bạn có chắc chắn muốn xóa chuyên mục tin tức này</small>
                         </v-card-text>
                         <v-card-actions>
                           <v-spacer></v-spacer>
