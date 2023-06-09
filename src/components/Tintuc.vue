@@ -162,6 +162,7 @@ import { taocock } from "@/api/cookie";
 
 import Menu from "./component/Menu.vue";
 import { status_load } from "@/pinia/Store";
+import { watch } from "vue";
 
 export default {
   name: "TinTuc",
@@ -253,6 +254,17 @@ export default {
         console.log('lỗi không xóa được ' , er)
       })
     }
+
+    const pinia_status = status_load();
+    watch(pinia_status,(n)=>{
+      if(n.status_load){
+        load_Data(page_number.value-1)
+        
+      }
+
+      pinia_status.unload()
+    })
+
 
     return {
       cards,
