@@ -366,4 +366,12 @@ export default {
   background-image: url("../assets/image5.png");
 }
 /* style="background: url( '../assets/logo.jpg') no-repeat center center" */
+
+th {
+  background-color: #e3f1fb;
+}
+
+td {
+  padding: 10px 10px;
+}
 </style>

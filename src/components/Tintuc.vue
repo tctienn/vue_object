@@ -51,7 +51,7 @@
             <table
               width="100%"
               border="1"
-              cellspacing="0"
+              
               style="border-collapse: collapse; border: solid 1px #e5e5e5"
             >
               <tr>

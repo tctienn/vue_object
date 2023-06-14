@@ -150,14 +150,14 @@
                 <table
                   width="100%"
                   border="1"
-                  cellspacing="0"
+                  cellpadding="30"
                   style="border-collapse: collapse; border: solid 1px #e5e5e5"
                 >
                   <tr>
                     <th>
                       <input type="checkbox" @click="check_all" />
                     </th>
-                    <th>STT</th>
+                    <th >STT</th>
                     <th>Họ Và Tên</th>
                     <th>Mã đơn vị</th>
 
@@ -195,6 +195,8 @@
                     </td>
                   </tr>
                 </table>
+
+                
               </v-container>
             </v-main>
             <div class="d-flex justify-space-between mb-6 pa-2">
@@ -420,4 +422,12 @@ export default {
 #ey {
   padding: 0;
 } */
+
+th {
+  background-color: #e3f1fb;
+}
+
+td {
+  padding: 10px 10px;
+}
 </style>
