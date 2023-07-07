@@ -151,7 +151,7 @@
               <td>{{ item.TenVanBan }}</td>
               <td>{{ item.NgayBanHanh }}</td>
               <td>{{ item.NgayHieuLuc }}</td>
-              <td>{{ item.DiaChiTruyCap }}</td>
+              <td><a :href="item.DiaChiTruyCap">{{ item.DiaChiTruyCap }}</a> </td>
               <td>{{ item.CoQuanBanHanh.TenMuc }}</td>
             </tr>
 
