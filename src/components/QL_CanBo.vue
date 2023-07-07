@@ -348,7 +348,7 @@ export default {
 };
 </script>
   
-  <style>
+  <style scoped>
 #as {
   /* background-image: url(../assets/bg-header.png); */
   background-size: 100% 100%;

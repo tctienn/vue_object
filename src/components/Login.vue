@@ -77,10 +77,10 @@ import { Icon } from "@iconify/vue";
 import Fooder from "./Fooder";
 import { ref } from "vue";
 // import axios from 'axios';
-import { api_login } from "../api/api.js";
+import {  login_khoSoHoa } from "../api/api.js";
 
 import { useRouter } from "vue-router";
-import { menu_pina } from "@/pinia/Store";
+// import { menu_pina } from "@/pinia/Store";
 
 export default {
   name: "HeaDers",
@@ -92,37 +92,21 @@ export default {
     const router = useRouter();
     const name = ref(""); //duantv@fds.vn
     const password = ref(""); //Abcd@1234
-    const pina_menu = menu_pina();
+    // const pina_menu = menu_pina();
     function login() {
       try {
-        api_login
-          .post(
-            "/token",
-            {
-              username: name.value,
-              password: password.value,
-              app: "dvc-mobile",
-            }
-            // ,
-            // {
-            //     headers: {
-            //         secret: 'f5gDd1JLB0vq6VVBvzEbltq6iVuaddvk',
-            //         'Accept': 'application/json', // báo cho máy chủ muốn nhận dữ liệu response dạng json
-            //         'Content-Type': 'application/x-www-form-urlencoded' // báo cho máy chủ biết dữ liệu được mã hóa theo kiểu
-            //     },
 
-            // }
-          )
+        login_khoSoHoa({username:name.value, password:password.value})
           .then(() => {
             // Lưu token vào localStorage hoặc Vuex store
             // console.log('ay :',response.data.access_token)
-            pina_menu.actions_loadmenu().then(() => {
-              /// không thêm () thì nó vẫn sảy ra bất đồng bộ đây là cấu trúc của then
-              router.replace("/quan-li-can-bo");
-              // console.log(pina_menu.menu)
-            });
+            // pina_menu.actions_loadmenu().then(() => {
+            //   /// không thêm () thì nó vẫn sảy ra bất đồng bộ đây là cấu trúc của then
+            //   router.replace("/quan-li-can-bo");
+            //   // console.log(pina_menu.menu)
+            // });
 
-            // router.replace("/canbo")
+            router.replace("/danhsachthutuc")
           });
 
         // console.log(data_login)

@@ -545,4 +545,113 @@ export const delete_xoaTinTuc = (PrimKey)=>{
 
     return axios(config)
 
+
+
+
+    
+
+}
+
+
+/////////////////////kho số hóa 
+export const api_login_ksh = axios.create({
+    baseURL: 'http://119.17.200.69:8004/realms/flex-v2-dev/protocol/openid-connect/token',
+    timeout: 10000, // set timeout to 10 seconds
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length':'<calculated when request is sent>',
+        'Accept':'*/*'
+    },
+});
+
+api_login_ksh.interceptors.request.use((config) => {
+    config.headers = {
+        // secret: "BMKQDYC1TYHilQa1xe5IXqBLPBMaibwz",
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+    };
+
+    return config;
+}, function(error) {
+    
+    return Promise.reject(error);
+});
+api_login_ksh.interceptors.response.use(function(response) {
+    // Trả về dữ liệu phản hồi
+    
+    // localStorage.setItem('token', response.data.access_token)
+    taocock('login_khoSoHoa' , response.data.access_token,'36000');
+        // console.log(localStorage.getItem('token'))
+
+    return response;
+}, function(error) {
+    // Xử lý lỗi
+    console.log(' có lỗi trong respong api login kho số hóa')
+    return Promise.reject(error);
+});
+
+export const login_khoSoHoa = (data)=>{
+    console.log(data);
+
+    return api_login_ksh.post("",{
+        grant_type:"password",
+        client_id:"mtdata-idpmgt267",
+        client_secret:"BMKQDYC1TYHilQa1xe5IXqBLPBMaibwz",
+
+        
+        username:"mtdata",
+        password:"Mtdata@123456"
+
+    })
+
+}
+
+const api_khoSoHoa = axios.create({
+    baseURL: 'http://119.17.200.69:8004/',
+    // timeout: 10000, // set timeout to 10 seconds
+    headers: {
+        'Accept':'application/json',
+        'Content-Type': 'application/json',
+    }
+})
+
+
+api_khoSoHoa.interceptors.request.use((config)=>{
+    
+        var token = getCookie('login_khoSoHoa')
+
+        if (token) {
+            config.data = null // xác nhận phương thức get không gửi dữ liệu 
+            config.headers = {
+                Authorization: `Bearer ${token}`,
+                'Accept': 'application/json', // báo cho máy chủ muốn nhận dữ liệu response dạng json 
+                'Content-Type': 'application/json'
+            };
+            return config
+        }
+    
+
+}, function(error) {
+    // Xử lý lỗi
+    console.log('lỗi ở intercepter')
+    return Promise.reject(error);
+})
+
+export const get_TTHC =(page,side) =>{
+
+    return api_khoSoHoa.get("/publicadministrativemgt/internal/thutuchanhchinh/1.0/filter",{
+        params : {
+            page:page,
+            size:side,
+            linhVucThuTuc_MaMuc:"G04-GT06"
+        }
+    })
+
+}
+
+
+export const get_DetailThuTuc = (PrimKey) =>{
+
+    return api_khoSoHoa.get(`/publicadministrativemgt/internal/thutuchanhchinh/1.0/${PrimKey}`)
+    
 }

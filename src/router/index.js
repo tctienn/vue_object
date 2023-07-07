@@ -31,10 +31,11 @@ import QL_CanBoVue from "@/components/QL_CanBo.vue";
 import dateVue from "@/components/demo/date.vue";
 // import table from "../components/demo/table.vue"
 import demo_tabe from "@/components/demo/demo_tabe.vue";
-import QLSinhVien from "@/components/QL_SinhVien.vue";
+// import QLSinhVien from "@/components/QL_SinhVien.vue";
 import Error_page from "@/components/Error_page.vue"
 
 import demo_checknull from "@/components/demo/demo_checknull.vue"
+import DanhSachThuTuc from "@/components/DanhSachThuTuc.vue"
 // import Table
 // import QL_CanBoVue from "@/components/QL_CanBo.vue";
 
@@ -82,20 +83,17 @@ const routes = [{ /// sử dụng router hạn chế dùng thẻ a mà nên dùn
     },
     {
         path:"/quan-li-sinh-vien",
-        component: QLSinhVien
+        component: ()=>import('@/components/QL_SinhVien.vue')  // phương pháp Lazy loading routes ( có thể bị lỗi trong trường hợp  npm run dev hoặc npm run watch sẽ bị báo lỗi Support for the experimental syntax 'dynamicImpo rt' isn't currently enabled)
     },
     {
         path:"/demochecknull",
         component: demo_checknull
     },
 
-
-    
-
-    // {
-    //     patch: '/axios',
-    //     component: AxiosDemo
-    // }
+{
+    path:"/danhsachthutuc",
+    component:DanhSachThuTuc
+},
     { 
         path: '/:pathMatch(.*)*', 
         component: Error_page 

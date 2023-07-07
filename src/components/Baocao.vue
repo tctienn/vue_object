@@ -282,7 +282,7 @@
         }
     }
   </script>
-  <style>
+  <style scoped>
     .triangle-up {
       
         width: 0px;
