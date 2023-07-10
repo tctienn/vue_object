@@ -83,6 +83,7 @@
               append-inner-icon="mdi-magnify"
               variant="outlined"
               density="compact"
+              v-model="search_value"
               
               class="mr-2"
               
@@ -100,7 +101,10 @@
             <div>Lĩnh vực</div>
             <v-select
               clearable
-              :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+              :items="data_linhVuc"
+              item-title="TenMuc"
+              item-value="MaMuc"
+              v-model="select_linhVuc"
               variant="outlined"
               density="compact"
               
@@ -110,7 +114,11 @@
           <div style="width: 49%;">
             <div>Mức độ</div>
             <v-select
-              clearable            :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+              clearable            
+              :items="data_mucDo"
+              item-title="TenMuc"
+              item-value="MaMuc"
+              v-model="select_mucDo"
               variant="outlined"
               density="compact"
               
@@ -121,7 +129,10 @@
             <div>Cấp thực hiện</div>
             <v-select
               clearable
-              :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+              :items="data_cap"
+              item-title="TenMuc"
+              item-value="MaMuc"
+              v-model="select_cap"
               variant="outlined"
               density="compact"
       
@@ -132,7 +143,10 @@
             <div>Cơ quan thực hiện</div>
             <v-select
               clearable
-              :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+              :items="data_coQuan"
+              item-title="TenMuc"
+              item-value="MaMuc"
+              v-model="select_coQuan"
               variant="outlined"
               density="compact"
                        
@@ -158,7 +172,7 @@
             <v-btn style="border: solid 1px #0468b1;" color="#0468b1" variant="outlined" prepend-icon="mdi-close" class=" mr-2 " @click="clickDialogSearch" >
               Đóng
             </v-btn>
-            <v-btn style="background-color: #0468b1;" color="white" variant="outlined" >
+            <v-btn style="background-color: #0468b1;" color="white" variant="outlined" @click="search" >
               Tìm kiếm
             </v-btn>
           </div>
@@ -233,7 +247,7 @@
 </template>
   
   <script>
-import { get_TTHC } from "@/api/api";
+import { get_TTHC,get_linhVuc,get_mucDo,get_capTT, get_coQuan } from "@/api/api";
 import { watch } from "vue";
 import { ref } from "vue";
 import dialog_detail_DSTT from './component/dialog_detail_DSTT.vue'
@@ -252,10 +266,31 @@ export default {
     const data = ref([]);
     const old_data = ref();
     var dialog_search = ref(false);
-
+    const data_linhVuc = ref()
+    const select_linhVuc= ref()
+    const data_mucDo = ref()
+    const select_mucDo = ref()
+    const data_cap = ref()
+    const select_cap = ref()
+    const data_coQuan = ref()
+    const select_coQuan = ref()
+    
     const clickDialogSearch= () =>{
       dialog_search.value = !dialog_search.value
-      console.log(dialog_search)
+      
+      get_linhVuc().then((linhvuc)=>{
+         data_linhVuc.value = linhvuc.data.content
+      })
+      get_mucDo().then((mucdo)=>{
+        data_mucDo.value = mucdo.data.content
+      })
+      get_capTT().then((cap)=>{
+        data_cap.value = cap.data.content
+      })
+      get_coQuan().then((coquan)=>{
+        data_coQuan.value = coquan.data.content
+      })
+      
     }
 
 
@@ -285,11 +320,15 @@ export default {
         old_data.value = datas.data.content
         page.value.page_size = datas.data.totalPages
         page.value.count_item = datas.data.totalElements
-
+        
       })
     }
     getData(0)
 
+    const search_value = ref()
+    const  search_name = () =>{
+      data.value = old_data.value.filter( e => e.TenMuc.search(search_value.value) !=-1 )
+    }
 
     const  search = () =>{
 
@@ -297,6 +336,7 @@ export default {
       {
         data.value = old_data.value.filter(e=> e.TrangThaiDuLieu.MaMuc == select_trangthai.value)
       }
+      
 
     }
     
@@ -304,12 +344,6 @@ export default {
       getData(newValue)
     })
 
-    // watch(select_trangthai, (newValue)=>{
-    //   console.log(newValue)
-    // })
-    
-  
-       
     return {
 
       page_number,
@@ -324,6 +358,16 @@ export default {
       data_trangthai,
       select_trangthai,
       search,
+      data_linhVuc,
+      select_linhVuc,
+      data_mucDo,
+      select_mucDo,
+      data_cap,
+      select_cap,
+      data_coQuan,
+      select_coQuan,
+      search_value,
+      search_name,
 
       dialog_detail_DSTT
 

@@ -655,3 +655,19 @@ export const get_DetailThuTuc = (PrimKey) =>{
     return api_khoSoHoa.get(`/publicadministrativemgt/internal/thutuchanhchinh/1.0/${PrimKey}`)
     
 }
+
+export const get_linhVuc = () =>{
+    return api_khoSoHoa.get('http://119.17.200.69:8004/publicadministrativemgt/internal/linhvucthutuc/1.0/filter')
+}
+
+export const get_mucDo = ()=>{
+    return api_khoSoHoa.get('http://119.17.200.69:8004/publicadministrativemgt/internal/mucdodvctructuyen/1.0/filter')
+}
+
+export const get_capTT = ()=>{
+    return api_khoSoHoa.get('http://119.17.200.69:8004/publicadministrativemgt/internal/capthuchienthutuc/1.0/filter')
+}
+
+export const get_coQuan = ()=>{
+    return api_khoSoHoa.get('http://119.17.200.69:8004/publicadministrativemgt/internal/coquanthuchientthc/1.0/filter')
+}

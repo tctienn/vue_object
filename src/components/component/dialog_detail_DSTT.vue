@@ -100,8 +100,8 @@
             <tr>
               <th>Trường hợp</th>
               <th>Tên giấy tờ</th>
-              <th>Mẫu đơn, tờ khai</th>
-              <th>Số lượng</th>
+              <th style="width: 20%;">Mẫu đơn, tờ khai</th>
+              <th style="width: 15%;">Số lượng</th>
             </tr>
 
             <!-- <tr v-for="(item,i) in data.ThanhPhanHoSo" :key="i">
@@ -109,7 +109,8 @@
             </tr> -->
             <template v-for="(item,i) in data.ThanhPhanHoSo" :key="i">
               <tr v-for="(item2 , i2) in item.GiayTo " :key="i2">
-                <td :rowspan="item.GiayTo.length">{{ item2.TruongHop }}</td>
+                <td v-if="i2==0" :rowspan="item.GiayTo.length">{{ item2.TruongHop }}</td>
+
                 <td>{{ item2.TenGiayTo }}</td>
                 <td><a :href="item2.DinhKem.url">{{ item2.DinhKem.TenMauDon }}</a></td>
                 <td>
@@ -149,8 +150,8 @@
             <tr v-for="(item, i) in data.CanCuPhapLy" :key="i">
               <td>{{ item.SoVanBan }}</td>
               <td>{{ item.TenVanBan }}</td>
-              <td>{{ item.NgayBanHanh }}</td>
-              <td>{{ item.NgayHieuLuc }}</td>
+              <td>{{ item.NgayBanHanh.replace(/-/g, '/') }}</td>
+              <td>{{ item.NgayHieuLuc.replace(/-/g, '/') }}</td>
               <td><a :href="item.DiaChiTruyCap">{{ item.DiaChiTruyCap }}</a> </td>
               <td>{{ item.CoQuanBanHanh.TenMuc }}</td>
             </tr>
@@ -223,6 +224,7 @@ import { ref } from 'vue';
     td{
       font-size: 14px;
       white-space: pre-wrap;
+      padding: 8px;
     }
 
     table{
@@ -238,7 +240,7 @@ import { ref } from 'vue';
     }
 
     #detail_td1{
-      padding: 8px 0;
+      padding: 8px 4px;
       width: 30%;
     }
   </style>
