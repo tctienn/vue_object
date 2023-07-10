@@ -68,7 +68,7 @@
       </v-card>
       <!-- // error -->
 
-      <v-container class="py-2 px-6" fluid>
+      <v-container class="py-0 px-6"  fluid>
         <h2 style="color: #2161b1">Danh sách thủ tục</h2>
         <hr style="border: solid #2161b1 1px" />
 
@@ -181,9 +181,9 @@
         <!-- ///////////////////// main -->
 
         <v-main class="pa-0">
-          <v-container class="ma-0 pa-2">
+          <v-container class="ma-4 pa-2"     >
             <v-main class="pa-0">
-              <v-container class="scrollable ma-0 pa-2">
+              <v-container class="scrollable ma-0 pa-2"  >
                 <table
                   width="100%"
                   border="1"
@@ -247,7 +247,7 @@
 </template>
   
   <script>
-import { get_TTHC,get_linhVuc,get_mucDo,get_capTT, get_coQuan } from "@/api/api";
+import { get_TTHC,get_linhVuc,get_mucDo,get_capTT, get_coQuan,get_trangThaiTT } from "@/api/api";
 import { watch } from "vue";
 import { ref } from "vue";
 import dialog_detail_DSTT from './component/dialog_detail_DSTT.vue'
@@ -290,6 +290,10 @@ export default {
       get_coQuan().then((coquan)=>{
         data_coQuan.value = coquan.data.content
       })
+
+      get_trangThaiTT().then((trangthai)=>{
+        data_trangthai.value = trangthai.data.content
+      })
       
     }
 
@@ -300,19 +304,8 @@ export default {
     ]
     const check_loading = ref(true);
 
-    var data_trangthai = [
-      {        
-         type: "C_TrangThaiDuLieu",
-                MaMuc: "02",
-                TenMuc: "Chính Thức"
-      },
-      {        
-         type: "C_TrangThaiDuLieu",
-                MaMuc: "01",
-                TenMuc: "không chính thức"
-      }
-    ]
-    const select_trangthai = ref(null) 
+    var data_trangthai = ref()
+    const select_trangthai = ref() 
 
     const getData=(nowpage)=>{
       get_TTHC(nowpage,10).then((datas)=>{
@@ -332,10 +325,11 @@ export default {
 
     const  search = () =>{
 
-      if(select_trangthai.value != null)
+      if( typeof select_trangthai.value == 'undefined')
       {
         data.value = old_data.value.filter(e=> e.TrangThaiDuLieu.MaMuc == select_trangthai.value)
       }
+      
       
 
     }
@@ -404,6 +398,7 @@ td {
   padding: 10px 10px;
   /* white-space: pre-wrap; */
 }
+
 
 
 </style>

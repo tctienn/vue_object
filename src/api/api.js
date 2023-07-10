@@ -671,3 +671,7 @@ export const get_capTT = ()=>{
 export const get_coQuan = ()=>{
     return api_khoSoHoa.get('http://119.17.200.69:8004/publicadministrativemgt/internal/coquanthuchientthc/1.0/filter')
 }
+
+export const get_trangThaiTT =()=>{
+    return api_khoSoHoa.get('http://119.17.200.69:8004/cmonmgt/internal/trangthaidulieu/1.0/filter')
+}
