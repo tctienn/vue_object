@@ -1,4 +1,4 @@
-# newvu  không còn hoạt động vì api phía công ty fds đã dừng hoạt động thử nghiệp cho thực tập
+#   không còn hoạt động vì api phía công ty fds đã dừng hoạt động thử nghiệm cho thực tập
 
 
 ## Project setup
